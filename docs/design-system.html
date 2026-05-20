@@ -1,0 +1,2224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Design System do Portal de Memórias — paleta Google Material aplicada com surfaces tonalizadas." />
+  <title>Portal de Memórias · Design System v0.2</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================================
+       TOKENS — fonte da verdade
+       ===================================================================== */
+    :root {
+      /* --- Cores acento Google + roxo --- */
+      --blue: #1A73E8;          --blue-strong: #1666C8;     --blue-soft: #E8F0FE;
+      --red: #EA4335;           --red-strong: #D33B2C;      --red-soft: #FCE8E6;
+      --yellow: #F9AB00;        --yellow-strong: #E09900;   --yellow-soft: #FEF7E0;
+      --green: #34A853;         --green-strong: #2D9748;    --green-soft: #E6F4EA;
+      --purple: #9334E6;        --purple-strong: #7E2BCC;   --purple-soft: #F3E8FD;
+
+      /* --- Surfaces tonalizadas (Material 3 surface tonal system) --- */
+      --bg:               #F8F9FA;   /* fundo principal — cinza-creme tonal */
+      --surface:          #FFFFFF;   /* cards, sidebar, modais */
+      --surface-low:      #F1F3F4;   /* hover, áreas secundárias */
+      --surface-high:     #E8EAED;   /* destaque, divisores */
+      --surface-highest:  #DADCE0;   /* máximo cinza antes da borda */
+
+      /* --- Textos --- */
+      --text-primary:    #202124;
+      --text-secondary:  #5F6368;
+      --text-tertiary:   #80868B;
+      --text-disabled:   #BDC1C6;
+      --text-inverse:    #FFFFFF;
+
+      /* --- Bordas --- */
+      --border:          #DADCE0;
+      --border-strong:   #BDC1C6;
+
+      /* --- Funcionais (reaproveitam acentos) --- */
+      --success: var(--green);
+      --warning: var(--yellow);
+      --error:   var(--red);
+      --info:    var(--blue);
+
+      /* --- Tipografia --- */
+      --font: 'Roboto Flex', 'Google Sans', -apple-system, system-ui, sans-serif;
+
+      --text-display:  3rem;       /* 48px */
+      --text-h1:       2.25rem;    /* 36px */
+      --text-h2:       1.75rem;    /* 28px */
+      --text-h3:       1.375rem;   /* 22px */
+      --text-h4:       1.125rem;   /* 18px */
+      --text-body-lg:  1.0625rem;  /* 17px */
+      --text-body:     0.9375rem;  /* 15px */
+      --text-small:    0.8125rem;  /* 13px */
+      --text-caption:  0.6875rem;  /* 11px */
+
+      --leading-tight:   1.2;
+      --leading-normal:  1.5;
+      --leading-relaxed: 1.6;
+
+      /* --- Espaçamento --- */
+      --space-1:  4px;    --space-2:  8px;    --space-3:  12px;
+      --space-4:  16px;   --space-5:  20px;   --space-6:  24px;
+      --space-7:  32px;   --space-8:  40px;   --space-9:  48px;
+      --space-10: 64px;   --space-11: 80px;   --space-12: 96px;
+
+      /* --- Cantos --- */
+      --radius-sm:    8px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --radius-xl:    28px;
+      --radius-full:  9999px;
+
+      /* --- Sombras (sutis) --- */
+      --shadow-1: 0 1px 2px rgba(60,64,67,0.08), 0 1px 3px rgba(60,64,67,0.05);
+      --shadow-2: 0 2px 6px rgba(60,64,67,0.10), 0 1px 2px rgba(60,64,67,0.06);
+      --shadow-3: 0 4px 12px rgba(60,64,67,0.15), 0 2px 4px rgba(60,64,67,0.08);
+      --shadow-fab: 0 6px 12px rgba(26,115,232,0.30), 0 2px 4px rgba(26,115,232,0.20);
+
+      /* --- Motion --- */
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --dur-fast: 150ms;
+      --dur-normal: 200ms;
+      --dur-slow: 300ms;
+    }
+
+    /* =====================================================================
+       RESET + base
+       ===================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    button { font: inherit; cursor: pointer; background: none; border: 0; padding: 0; color: inherit; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-size: var(--text-body);
+      line-height: var(--leading-relaxed);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.875em;
+      background: var(--surface-high);
+      color: var(--text-primary);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* =====================================================================
+       SHELL DO DOCUMENTO
+       ===================================================================== */
+    .page { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-7); }
+
+    /* --- Cover --- */
+    .cover {
+      padding: var(--space-12) 0 var(--space-9);
+      border-bottom: 1px solid var(--border);
+    }
+    .cover .version-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 14px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-6);
+    }
+    .cover h1 {
+      font-weight: 500;
+      font-size: var(--text-display);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0 0 var(--space-5);
+      max-width: 20ch;
+    }
+    .cover .lead {
+      font-size: var(--text-body-lg);
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin: 0;
+    }
+
+    /* --- Sumário sticky --- */
+    .toc {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 249, 250, 0.92);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-9);
+    }
+    .toc-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-7);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .toc-inner::-webkit-scrollbar { display: none; }
+    .toc-label {
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-right: var(--space-3);
+      flex-shrink: 0;
+    }
+    .toc a {
+      flex-shrink: 0;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-small);
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .toc a:hover {
+      background: var(--surface-low);
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .toc a.section-num {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    /* --- Seção do documento --- */
+    .section {
+      padding: var(--space-9) 0 var(--space-10);
+      scroll-margin-top: 72px;
+    }
+    .section + .section { border-top: 1px solid var(--border); }
+    .section-head { margin-bottom: var(--space-8); max-width: 720px; }
+    .section-eyebrow {
+      display: inline-block;
+      font-size: var(--text-caption);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: var(--space-3);
+    }
+    .section h2 {
+      font-weight: 500;
+      font-size: var(--text-h1);
+      line-height: var(--leading-tight);
+      letter-spacing: -0.015em;
+      margin: 0 0 var(--space-3);
+    }
+    .section-lead {
+      font-size: var(--text-body-lg);
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .sub { margin-bottom: var(--space-9); }
+    .sub-head { margin-bottom: var(--space-5); }
+    .sub h3 {
+      font-weight: 500;
+      font-size: var(--text-h3);
+      line-height: var(--leading-tight);
+      margin: 0 0 var(--space-2);
+    }
+    .sub-lead {
+      color: var(--text-secondary);
+      font-size: var(--text-small);
+      margin: 0;
+      max-width: 64ch;
+    }
+
+    .subsub-title {
+      font-weight: 600;
+      font-size: var(--text-caption);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0 0 var(--space-4);
+    }
+
+    /* =====================================================================
+       1.1 CORES
+       ===================================================================== */
+    .color-group { margin-bottom: var(--space-8); }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+    .color-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .color-swatch { height: 80px; }
+    .color-info { padding: var(--space-4); }
+    .color-name {
+      font-weight: 600;
+      font-size: var(--text-small);
+      margin: 0 0 2px;
+    }
+    .color-token {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      color: var(--blue);
+      letter-spacing: 0.01em;
+    }
+    .color-hex {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+    .color-use {
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+      margin-top: var(--space-2);
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+
+    /* =====================================================================
+       1.2 TIPOGRAFIA
+       ===================================================================== */
+    .type-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-6);
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .type-row:last-child { border-bottom: 0; }
+    .type-meta { font-size: var(--text-small); color: var(--text-secondary); }
+    .type-meta .tok {
+      display: block;
+      color: var(--blue);
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      margin-bottom: var(--space-1);
+    }
+
+    .ex-display  { font-weight: 500; font-size: var(--text-display); line-height: 1.05; letter-spacing: -0.025em; margin: 0; }
+    .ex-h1       { font-weight: 500; font-size: var(--text-h1); line-height: 1.15; letter-spacing: -0.015em; margin: 0; }
+    .ex-h2       { font-weight: 500; font-size: var(--text-h2); line-height: 1.2; margin: 0; }
+    .ex-h3       { font-weight: 500; font-size: var(--text-h3); line-height: 1.3; margin: 0; }
+    .ex-h4       { font-weight: 500; font-size: var(--text-h4); line-height: 1.4; margin: 0; }
+    .ex-bodylg   { font-weight: 400; font-size: var(--text-body-lg); line-height: 1.6; margin: 0; max-width: 56ch; }
+    .ex-body     { font-weight: 400; font-size: var(--text-body); line-height: 1.6; margin: 0; max-width: 60ch; }
+    .ex-small    { font-weight: 400; font-size: var(--text-small); line-height: 1.5; margin: 0; color: var(--text-secondary); }
+    .ex-caption  { font-weight: 600; font-size: var(--text-caption); line-height: 1.4; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin: 0; }
+
+    /* =====================================================================
+       1.3 ESPAÇAMENTO / 1.4 CANTOS / 1.5 SOMBRAS / 1.6 MOTION
+       ===================================================================== */
+    .space-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .space-row {
+      display: grid;
+      grid-template-columns: 140px 60px 1fr;
+      gap: var(--space-4);
+      align-items: center;
+    }
+    .space-row .tok { font-family: 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--blue); }
+    .space-row .px { font-size: var(--text-small); color: var(--text-secondary); }
+    .space-row .bar { height: 14px; background: var(--blue-soft); border-radius: 3px; }
+
+    .radius-grid, .shadow-grid, .motion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    .radius-card, .shadow-card, .motion-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .radius-card.sm   { border-radius: var(--radius-sm); }
+    .radius-card.md   { border-radius: var(--radius-md); }
+    .radius-card.lg   { border-radius: var(--radius-lg); }
+    .radius-card.xl   { border-radius: var(--radius-xl); }
+    .radius-card.full { border-radius: var(--radius-full); padding: var(--space-4) var(--space-5); }
+    .radius-card .tok, .shadow-card .tok, .motion-card .tok {
+      display: block;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 12px;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    .radius-card .px, .shadow-card .px {
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+    }
+    .radius-card .use, .shadow-card .use {
+      font-size: var(--text-caption);
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .shadow-card { border: 0; border-radius: var(--radius-md); }
+    .shadow-card.s1 { box-shadow: var(--shadow-1); }
+    .shadow-card.s2 { box-shadow: var(--shadow-2); }
+    .shadow-card.s3 { box-shadow: var(--shadow-3); }
+    .shadow-card.sf { box-shadow: var(--shadow-fab); }
+
+    .motion-card { cursor: default; }
+    .motion-demo {
+      height: 60px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: var(--space-3) 0;
+    }
+    .motion-demo .dot {
+      width: 24px; height: 24px;
+      background: var(--blue);
+      border-radius: var(--radius-full);
+    }
+    .motion-card.fade .dot { opacity: 0.3; transition: opacity var(--dur-normal) var(--ease-out); }
+    .motion-card.fade:hover .dot { opacity: 1; }
+    .motion-card.slide .dot { transform: translateX(-30px); transition: transform var(--dur-normal) var(--ease-out); }
+    .motion-card.slide:hover .dot { transform: translateX(30px); }
+    .motion-card.scale .dot { transform: scale(0.6); transition: transform var(--dur-slow) var(--ease-out); }
+    .motion-card.scale:hover .dot { transform: scale(1.2); }
+    .motion-card .hint {
+      font-size: var(--text-caption);
+      color: var(--text-tertiary);
+      display: block;
+      margin-top: var(--space-2);
+    }
+
+    /* =====================================================================
+       COMPONENTES — PALCO
+       ===================================================================== */
+    .stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-7);
+      margin-bottom: var(--space-5);
+    }
+    .stage-label {
+      display: block;
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-4);
+    }
+    .stage-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+
+    /* ============ Botões ============ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: 40px;
+      padding: 0 var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: 500;
+      font-size: var(--text-body);
+      transition: all var(--dur-fast) var(--ease-out);
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-strong); box-shadow: var(--shadow-2); }
+    .btn-secondary { background: var(--surface-low); color: var(--text-primary); }
+    .btn-secondary:hover { background: var(--surface-high); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { background: var(--surface-low); border-color: var(--border-strong); }
+    .btn-ghost { background: transparent; color: var(--blue); }
+    .btn-ghost:hover { background: var(--blue-soft); }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-danger:hover { background: var(--red-strong); }
+    .btn-sm { height: 32px; padding: 0 var(--space-4); font-size: var(--text-small); }
+    .btn-lg { height: 48px; padding: 0 var(--space-7); font-size: var(--text-body-lg); }
+    .btn:disabled, .btn[aria-disabled="true"] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ============ FAB ============ */
+    .fab {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      height: 56px;
+      padding: 0 var(--space-6) 0 var(--space-5);
+      border-radius: var(--radius-md);
+      background: var(--blue);
+      color: #fff;
+      font-weight: 500;
+      font-size: var(--text-body);
+      box-shadow: var(--shadow-fab);
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .fab:hover { background: var(--blue-strong); transform: translateY(-2px); }
+    .fab.fab-icon { padding: 0; width: 56px; justify-content: center; }
+    .fab.fab-yellow { background: var(--yellow); color: var(--text-primary); box-shadow: 0 6px 12px rgba(249,171,0,0.30), 0 2px 4px rgba(249,171,0,0.20); }
+    .fab.fab-yellow:hover { background: var(--yellow-strong); color: #fff; }
+
+    /* ============ Icon button ============ */
+    .icon-btn {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .icon-btn:hover { background: var(--surface-low); color: var(--text-primary); }
+    .icon-btn.sm { width: 32px; height: 32px; }
+
+    /* ============ Chip ============ */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: 32px;
+      padding: 0 var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-primary);
+      font-size: var(--text-small);
+      font-weight: 500;
+      transition: all var(--dur-fast) var(--ease-out);
+      cursor: pointer;
+    }
+    .chip:hover { background: var(--surface-low); }
+    .chip.active {
+      background: var(--blue-soft);
+      border-color: var(--blue-soft);
+      color: var(--blue);
+    }
+    .chip .x {
+      width: 16px; height: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-full);
+      margin-right: -4px;
+    }
+    .chip .x:hover { background: rgba(26,115,232,0.15); }
+    .chip.dashed {
+      border-style: dashed;
+      color: var(--text-secondary);
+      background: transparent;
+    }
+    .chip.dashed:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+    /* ============ Search bar ============ */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      background: var(--surface-low);
+      border-radius: var(--radius-full);
+      padding: 0 var(--space-2) 0 var(--space-5);
+      height: 48px;
+      width: 100%;
+      max-width: 560px;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .search-bar:focus-within { background: var(--surface); box-shadow: var(--shadow-2); }
+    .search-bar .lead { color: var(--text-secondary); flex-shrink: 0; }
+    .search-bar input {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      font-family: var(--font);
+      font-size: var(--text-body);
+      color: var(--text-primary);
+      outline: 0;
+      min-width: 0;
+    }
+    .search-bar input::placeholder { color: var(--text-secondary); }
+    .ia-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 32px;
+      padding: 0 var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--purple-soft);
+      color: var(--purple);
+      font-weight: 600;
+      font-size: var(--text-small);
+    }
+    .ia-chip:hover { filter: brightness(0.97); }
+
+    /* ============ Input / Field ============ */
+    .field { display: flex; flex-direction: column; gap: var(--space-2); max-width: 360px; }
+    .field-label {
+      font-size: var(--text-small);
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .field input, .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-family: var(--font);
+      font-size: var(--text-body);
+      color: var(--text-primary);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .field input:focus, .field textarea:focus {
+      outline: 0;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-soft);
+    }
+    .field input::placeholder { color: var(--text-tertiary); }
+    .field-hint { font-size: var(--text-caption); color: var(--text-tertiary); margin-top: -4px; }
+    .field-error { color: var(--red); }
+
+    /* ============ Tabs ============ */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      font-weight: 500;
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      padding: 12px var(--space-5);
+      border-bottom: 3px solid transparent;
+      transition: all var(--dur-fast) var(--ease-out);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      position: relative;
+      bottom: -1px;
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    /* ============ Toast ============ */
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: 14px 16px 14px 20px;
+      background: var(--text-primary);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-3);
+      max-width: 460px;
+      font-size: var(--text-body);
+    }
+    .toast .check {
+      width: 24px; height: 24px;
+      border-radius: var(--radius-full);
+      background: var(--green); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .toast .action {
+      color: #BFD8FF;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: var(--text-small);
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
+    }
+    .toast .action:hover { background: rgba(255,255,255,0.10); }
+
+    /* ============ Avatar ============ */
+    .avatar {
+      border-radius: var(--radius-full);
+      background: var(--surface-high);
+      color: var(--text-primary);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .avatar.sm { width: 32px; height: 32px; font-size: 12px; }
+    .avatar.md { width: 40px; height: 40px; font-size: 14px; }
+    .avatar.lg { width: 56px; height: 56px; font-size: 18px; }
+    .avatar.blue { background: var(--blue); color: #fff; }
+    .avatar.green { background: var(--green); color: #fff; }
+    .avatar.yellow { background: var(--yellow); color: var(--text-primary); }
+    .avatar.empty { color: var(--text-tertiary); }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ============ Cartão de foto ============ */
+    .photo-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface-high);
+      cursor: pointer;
+      transition: transform var(--dur-normal) var(--ease-out), box-shadow var(--dur-normal) var(--ease-out);
+    }
+    .photo-card:hover {
+      transform: scale(1.005);
+      box-shadow: var(--shadow-2);
+    }
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-indicators {
+      position: absolute;
+      bottom: 8px; right: 8px;
+      display: flex; gap: 4px;
+    }
+    .ind {
+      width: 22px; height: 22px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .ind.fav { color: var(--yellow); }
+    .ind.geo { color: var(--green); }
+    .ind.people { color: var(--blue); }
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 35%);
+      opacity: 0;
+      transition: opacity var(--dur-fast) var(--ease-out);
+      pointer-events: none;
+    }
+    .photo-card:hover .photo-overlay { opacity: 1; }
+    .photo-actions {
+      position: absolute;
+      top: 8px; left: 8px;
+      display: flex; gap: 4px;
+      opacity: 0;
+      transition: opacity var(--dur-fast) var(--ease-out);
+    }
+    .photo-card:hover .photo-actions, .photo-card.selected .photo-actions { opacity: 1; }
+    .photo-card.selected { box-shadow: 0 0 0 3px var(--blue); }
+    .photo-act {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,0.95);
+      color: var(--text-primary);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .photo-act.checked { background: var(--blue); color: #fff; }
+
+    /* ============ Card de álbum ============ */
+    .album-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .album-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-3);
+      border-color: transparent;
+    }
+    .album-cover {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--surface-high);
+      overflow: hidden;
+    }
+    .album-cover img { width: 100%; height: 100%; object-fit: cover; }
+    .album-cover .count-badge {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: 500;
+    }
+    .album-info { padding: var(--space-4); }
+    .album-title {
+      font-weight: 500;
+      font-size: var(--text-h4);
+      margin: 0 0 var(--space-1);
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .album-meta { font-size: var(--text-small); color: var(--text-secondary); }
+    .album-color-tag { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ============ Card de pessoa ============ */
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .person-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+      border-color: transparent;
+    }
+    .person-card .ph-avatar {
+      margin: 0 auto var(--space-3);
+      width: 72px; height: 72px;
+      font-size: 22px;
+    }
+    .person-name { font-weight: 500; font-size: var(--text-body); margin: 0; }
+    .person-meta { font-size: var(--text-small); color: var(--text-secondary); margin-top: 2px; }
+
+    /* ============ Tag pill (chip grande) ============ */
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--red-soft);
+      color: var(--red-strong);
+      font-weight: 500;
+      font-size: var(--text-small);
+    }
+    .tag-pill.b { background: var(--blue-soft); color: var(--blue); }
+    .tag-pill.y { background: var(--yellow-soft); color: var(--yellow-strong); }
+    .tag-pill.g { background: var(--green-soft); color: var(--green-strong); }
+    .tag-pill.p { background: var(--purple-soft); color: var(--purple-strong); }
+    .tag-count {
+      font-weight: 400;
+      opacity: 0.7;
+    }
+
+    /* ============ Empty state ============ */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-10) var(--space-6);
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .empty-state .illu {
+      width: 80px; height: 80px;
+      border-radius: var(--radius-full);
+      background: var(--blue-soft);
+      color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-5);
+    }
+    .empty-state h4 {
+      font-weight: 500;
+      font-size: var(--text-h3);
+      margin: 0 0 var(--space-2);
+    }
+    .empty-state p {
+      color: var(--text-secondary);
+      font-size: var(--text-body);
+      margin: 0 0 var(--space-5);
+    }
+
+    /* =====================================================================
+       TELAS (recortes) — frame
+       ===================================================================== */
+    .screen {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-5);
+    }
+    .screen-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-6);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .screen-label .name {
+      font-weight: 600;
+      font-size: var(--text-small);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .screen-label .path {
+      font-size: var(--text-caption);
+      color: var(--text-tertiary);
+      font-family: 'SF Mono', Menlo, monospace;
+    }
+
+    /* Cabeçalho colorido por categoria (que ele pediu) */
+    .cat-header {
+      padding: var(--space-6) var(--space-7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .cat-header.fotos     { background: var(--blue-soft); }
+    .cat-header.albuns    { background: var(--yellow-soft); }
+    .cat-header.pessoas   { background: var(--green-soft); }
+    .cat-header.tags      { background: var(--red-soft); }
+    .cat-header.favoritos { background: var(--purple-soft); }
+
+    .cat-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .cat-header.fotos     .cat-icon { background: var(--blue); }
+    .cat-header.albuns    .cat-icon { background: var(--yellow); color: var(--text-primary); }
+    .cat-header.pessoas   .cat-icon { background: var(--green); }
+    .cat-header.tags      .cat-icon { background: var(--red); }
+    .cat-header.favoritos .cat-icon { background: var(--purple); }
+
+    .cat-text { flex: 1; min-width: 0; }
+    .cat-title { font-weight: 500; font-size: var(--text-h2); margin: 0; line-height: 1.2; letter-spacing: -0.01em; }
+    .cat-sub { font-size: var(--text-small); color: var(--text-secondary); margin-top: 2px; }
+    .cat-header.fotos     .cat-title { color: var(--blue-strong); }
+    .cat-header.albuns    .cat-title { color: var(--yellow-strong); }
+    .cat-header.pessoas   .cat-title { color: var(--green-strong); }
+    .cat-header.tags      .cat-title { color: var(--red-strong); }
+    .cat-header.favoritos .cat-title { color: var(--purple-strong); }
+
+    .screen-body { padding: var(--space-6) var(--space-7); }
+
+    /* Tabs e filters internos das telas */
+    .screen .tabs { margin-bottom: var(--space-5); }
+    .screen .filters-row {
+      display: flex; align-items: center; gap: var(--space-2);
+      padding-bottom: var(--space-5); flex-wrap: wrap;
+    }
+
+    /* Grid de fotos dentro de tela */
+    .ph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-2);
+    }
+    .month-group { margin-bottom: var(--space-7); }
+    .month-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    .month-title { font-weight: 500; font-size: var(--text-h3); margin: 0; }
+    .month-sub { font-size: var(--text-small); color: var(--text-secondary); }
+
+    /* Calendário compacto */
+    .cal-wrap {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-5);
+    }
+    @media (max-width: 900px) { .cal-wrap { grid-template-columns: 1fr; } }
+    .cal {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .cal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      background: var(--surface-low);
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .cal-title { font-weight: 500; font-size: var(--text-h4); margin: 0; }
+    .cal-nav { display: flex; gap: 2px; }
+    .cal-weekdays {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .cal-weekdays .wd {
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: var(--space-3) 0;
+    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+    .day {
+      position: relative;
+      min-height: 64px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 8px 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background var(--dur-fast) var(--ease-out);
+    }
+    .day:hover { background: var(--surface-low); }
+    .day:nth-child(7n) { border-right: 0; }
+    .day.outside { color: var(--text-tertiary); background: var(--surface-low); }
+    .day-num { font-size: var(--text-small); font-weight: 500; line-height: 1; }
+    .day.today .day-num {
+      background: var(--blue); color: #fff;
+      width: 22px; height: 22px;
+      border-radius: var(--radius-full);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 12px;
+      margin-left: -3px; margin-top: -3px;
+    }
+    .day.selected { background: var(--blue-soft); }
+    .day-dots { display: flex; gap: 3px; align-items: center; }
+    .day-dots .dt {
+      width: 5px; height: 5px;
+      border-radius: var(--radius-full);
+    }
+    .dt.b { background: var(--blue); }
+    .dt.y { background: var(--yellow); }
+    .dt.g { background: var(--green); }
+    .dt.r { background: var(--red); }
+    .dt.p { background: var(--purple); }
+    .day-count { font-size: 10px; color: var(--text-secondary); font-weight: 500; }
+    .day.selected .day-count { color: var(--blue); }
+
+    .day-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+    }
+    .day-panel .day-big {
+      font-weight: 500;
+      font-size: var(--text-h4);
+      margin: 0 0 var(--space-1);
+    }
+    .day-panel .day-sub {
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+      margin: 0 0 var(--space-4);
+    }
+    .day-panel .meta-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: var(--text-caption);
+      font-weight: 500;
+      color: var(--blue);
+      background: var(--blue-soft);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .day-photos {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;
+      margin-bottom: var(--space-3);
+    }
+    .day-photos img {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Tela de foto individual — split */
+    .photo-single {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--space-5);
+      min-height: 480px;
+    }
+    @media (max-width: 900px) { .photo-single { grid-template-columns: 1fr; } }
+    .ps-image {
+      background: var(--text-primary);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .ps-image img { max-width: 100%; max-height: 480px; object-fit: contain; }
+    .ps-panel {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .ps-panel .ps-date {
+      font-weight: 500;
+      font-size: var(--text-h3);
+      margin: 0;
+    }
+    .ps-panel .ps-place {
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+      margin: 0;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ps-block { padding-top: var(--space-4); border-top: 1px solid var(--border); }
+    .ps-block-label {
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0 0 var(--space-3);
+    }
+    .ps-story {
+      font-size: var(--text-body-lg);
+      line-height: 1.55;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .people-row {
+      display: flex; align-items: center; gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+    .people-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px 4px 4px;
+      border-radius: var(--radius-full);
+      background: var(--surface-low);
+      font-size: var(--text-small);
+      font-weight: 500;
+    }
+
+    /* Mini sidebar mostrada na seção "padrões" */
+    .layout-demo {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      min-height: 280px;
+    }
+    .ld-sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: var(--space-4); }
+    .ld-brand {
+      font-weight: 600;
+      font-size: var(--text-body);
+      margin-bottom: var(--space-5);
+    }
+    .ld-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-small);
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .ld-item.active { background: var(--blue-soft); color: var(--blue); font-weight: 600; }
+    .ld-item .dot-cat { width: 8px; height: 8px; border-radius: 50%; }
+    .ld-topbar {
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface);
+    }
+    .ld-canvas { padding: var(--space-5); color: var(--text-tertiary); font-size: var(--text-small); }
+
+    /* =====================================================================
+       Tabela de tokens dentro do arquivo
+       ===================================================================== */
+    .tk-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-size: var(--text-small);
+    }
+    .tk-table th, .tk-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tk-table tr:last-child td { border-bottom: 0; }
+    .tk-table th {
+      background: var(--surface-low);
+      font-weight: 600;
+      font-size: var(--text-caption);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    .tk-table code { font-size: 12px; }
+
+    /* =====================================================================
+       AJUSTES RESPONSIVOS
+       ===================================================================== */
+    @media (max-width: 720px) {
+      .page { padding: 0 var(--space-4); }
+      .cover h1 { font-size: 2.25rem; }
+      .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+      .space-row { grid-template-columns: 110px 50px 1fr; gap: var(--space-3); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== SUMÁRIO STICKY ============================== -->
+  <nav class="toc" aria-label="Sumário">
+    <div class="toc-inner">
+      <span class="toc-label">Sumário</span>
+      <a href="#fundamentos">1 · Fundamentos</a>
+      <a href="#componentes">2 · Componentes</a>
+      <a href="#padroes">3 · Padrões</a>
+      <a href="#telas">4 · Telas</a>
+      <a href="#vocabulario">5 · Vocabulário</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- ============================== CAPA ============================== -->
+    <header class="cover">
+      <span class="version-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/></svg>
+        Design System · v0.2
+      </span>
+      <h1>Portal de Memórias</h1>
+      <p class="lead">Aplicação Material colorida sobre superfícies tonalizadas. Esta versão consolida tokens, componentes e as telas principais num único documento navegável.</p>
+    </header>
+
+    <!-- ============================== 1 · FUNDAMENTOS ============================== -->
+    <section class="section" id="fundamentos">
+      <header class="section-head">
+        <span class="section-eyebrow">Parte 1</span>
+        <h2>Fundamentos</h2>
+        <p class="section-lead">Os tokens que sustentam a aparência do app. Tudo no resto do documento lê daqui — não se inventa cor, tamanho, peso ou tempo fora desta lista.</p>
+      </header>
+
+      <!-- 1.1 Cores -->
+      <div class="sub" id="cores">
+        <div class="sub-head">
+          <h3>1.1 · Cores</h3>
+          <p class="sub-lead">Cinco acentos cheios (Google + roxo) + paleta de superfícies tonalizadas. O fundo principal é levemente tonalizado, não branco puro — o branco fica reservado para cards e modais.</p>
+        </div>
+
+        <div class="color-group">
+          <p class="subsub-title">Acentos</p>
+          <div class="color-grid">
+            <article class="color-card"><div class="color-swatch" style="background: var(--blue)"></div><div class="color-info"><div class="color-name">Azul</div><div class="color-token">--blue</div><div class="color-hex">#1A73E8</div><p class="color-use">Acento principal. Item ativo, botão primário, links, foco. Categoria "Fotos".</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--red)"></div><div class="color-info"><div class="color-name">Vermelho</div><div class="color-token">--red</div><div class="color-hex">#EA4335</div><p class="color-use">Categoria "Tags". Ação destrutiva. Indicador de erro.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--yellow)"></div><div class="color-info"><div class="color-name">Amarelo</div><div class="color-token">--yellow</div><div class="color-hex">#F9AB00</div><p class="color-use">Categoria "Álbuns". Indicador de favorito. Aviso suave.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--green)"></div><div class="color-info"><div class="color-name">Verde</div><div class="color-token">--green</div><div class="color-hex">#34A853</div><p class="color-use">Categoria "Pessoas". Confirmação. Indicador de localização.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--purple)"></div><div class="color-info"><div class="color-name">Roxo</div><div class="color-token">--purple</div><div class="color-hex">#9334E6</div><p class="color-use">Categoria "Favoritos". Chip de busca por IA.</p></div></article>
+          </div>
+        </div>
+
+        <div class="color-group">
+          <p class="subsub-title">Acentos suaves (fundo de áreas)</p>
+          <div class="color-grid">
+            <article class="color-card"><div class="color-swatch" style="background: var(--blue-soft)"></div><div class="color-info"><div class="color-name">Azul suave</div><div class="color-token">--blue-soft</div><div class="color-hex">#E8F0FE</div><p class="color-use">Fundo do item ativo, header da seção "Fotos".</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--red-soft)"></div><div class="color-info"><div class="color-name">Vermelho suave</div><div class="color-token">--red-soft</div><div class="color-hex">#FCE8E6</div><p class="color-use">Header de "Tags". Estado de erro suave.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--yellow-soft)"></div><div class="color-info"><div class="color-name">Amarelo suave</div><div class="color-token">--yellow-soft</div><div class="color-hex">#FEF7E0</div><p class="color-use">Header de "Álbuns". Chip de favorito.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--green-soft)"></div><div class="color-info"><div class="color-name">Verde suave</div><div class="color-token">--green-soft</div><div class="color-hex">#E6F4EA</div><p class="color-use">Header de "Pessoas". Confirmação suave.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--purple-soft)"></div><div class="color-info"><div class="color-name">Roxo suave</div><div class="color-token">--purple-soft</div><div class="color-hex">#F3E8FD</div><p class="color-use">Header de "Favoritos". Chip "IA" no campo de busca.</p></div></article>
+          </div>
+        </div>
+
+        <div class="color-group">
+          <p class="subsub-title">Superfícies tonalizadas <span style="text-transform: none; letter-spacing: 0; color: var(--text-tertiary); font-weight: 400;">— hierarquia por tom, não por sombra</span></p>
+          <div class="color-grid">
+            <article class="color-card"><div class="color-swatch" style="background: var(--bg); border-bottom: 1px solid var(--border)"></div><div class="color-info"><div class="color-name">Fundo</div><div class="color-token">--bg</div><div class="color-hex">#F8F9FA</div><p class="color-use">Fundo principal de toda tela. Cinza-creme tonal — <strong>nunca branco puro</strong>.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--surface); border-bottom: 1px solid var(--border)"></div><div class="color-info"><div class="color-name">Superfície</div><div class="color-token">--surface</div><div class="color-hex">#FFFFFF</div><p class="color-use">Cards, sidebar, modais. Branco como destaque sobre o fundo.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--surface-low)"></div><div class="color-info"><div class="color-name">Baixa</div><div class="color-token">--surface-low</div><div class="color-hex">#F1F3F4</div><p class="color-use">Hover, áreas secundárias, fundo de busca.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--surface-high)"></div><div class="color-info"><div class="color-name">Alta</div><div class="color-token">--surface-high</div><div class="color-hex">#E8EAED</div><p class="color-use">Destaque, divisores fortes, placeholders.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--surface-highest)"></div><div class="color-info"><div class="color-name">Máxima</div><div class="color-token">--surface-highest</div><div class="color-hex">#DADCE0</div><p class="color-use">Linha mais marcada antes de virar borda estrutural.</p></div></article>
+          </div>
+        </div>
+
+        <div class="color-group">
+          <p class="subsub-title">Textos</p>
+          <div class="color-grid">
+            <article class="color-card"><div class="color-swatch" style="background: var(--text-primary)"></div><div class="color-info"><div class="color-name">Primário</div><div class="color-token">--text-primary</div><div class="color-hex">#202124</div><p class="color-use">Texto principal, títulos.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--text-secondary)"></div><div class="color-info"><div class="color-name">Secundário</div><div class="color-token">--text-secondary</div><div class="color-hex">#5F6368</div><p class="color-use">Metadados, descrições, labels.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--text-tertiary)"></div><div class="color-info"><div class="color-name">Terciário</div><div class="color-token">--text-tertiary</div><div class="color-hex">#80868B</div><p class="color-use">Placeholder, hints, contagens discretas.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--text-disabled)"></div><div class="color-info"><div class="color-name">Desabilitado</div><div class="color-token">--text-disabled</div><div class="color-hex">#BDC1C6</div><p class="color-use">Botão desabilitado, item inativo.</p></div></article>
+          </div>
+        </div>
+
+        <div class="color-group">
+          <p class="subsub-title">Bordas</p>
+          <div class="color-grid">
+            <article class="color-card"><div class="color-swatch" style="background: var(--border)"></div><div class="color-info"><div class="color-name">Borda</div><div class="color-token">--border</div><div class="color-hex">#DADCE0</div><p class="color-use">Bordas padrão de cards, inputs.</p></div></article>
+            <article class="color-card"><div class="color-swatch" style="background: var(--border-strong)"></div><div class="color-info"><div class="color-name">Borda forte</div><div class="color-token">--border-strong</div><div class="color-hex">#BDC1C6</div><p class="color-use">Divisores estruturais (ex: grade do calendário, separador de painel).</p></div></article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.2 Tipografia -->
+      <div class="sub" id="tipografia">
+        <div class="sub-head">
+          <h3>1.2 · Tipografia</h3>
+          <p class="sub-lead">Família única: <strong>Roboto Flex</strong>. Variável, com suporte completo a pesos 400/500/600/700 e ótima legibilidade em corpo pequeno.</p>
+        </div>
+
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-display</span>48px · peso 500 · line 1.05</div>
+          <p class="ex-display">Memórias</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-h1</span>36px · peso 500 · line 1.15</div>
+          <p class="ex-h1">Aniversário do Pedrinho</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-h2</span>28px · peso 500 · line 1.2</div>
+          <p class="ex-h2">Março de 2026</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-h3</span>22px · peso 500 · line 1.3</div>
+          <p class="ex-h3">Pessoas marcadas</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-h4</span>18px · peso 500 · line 1.4</div>
+          <p class="ex-h4">14 de março</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-body-lg</span>17px · peso 400 · line 1.6</div>
+          <p class="ex-bodylg">Foi um sábado morno, o quintal cheio de gente. O Pedrinho passou o dia entre os pés dos primos, com a boca pintada de bolo, sem ligar pra ninguém.</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-body</span>15px · peso 400 · line 1.6</div>
+          <p class="ex-body">Texto padrão de interface — descrições, labels longos, parágrafos em formulários.</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-small</span>13px · peso 400 · line 1.5</div>
+          <p class="ex-small">14 de março · Casa da vovó, São Paulo</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tok">--text-caption</span>11px · peso 600 · line 1.4</div>
+          <p class="ex-caption">Família · Aniversário · Quintal</p>
+        </div>
+      </div>
+
+      <!-- 1.3 Espaçamento -->
+      <div class="sub" id="espacamento">
+        <div class="sub-head">
+          <h3>1.3 · Espaçamento</h3>
+          <p class="sub-lead">Escala em base 4px. Padding interno de cards: 16–24px. Espaço mínimo entre elementos: 12px.</p>
+        </div>
+        <div class="space-list">
+          <div class="space-row"><span class="tok">--space-1</span><span class="px">4px</span><span class="bar" style="width: 4px;"></span></div>
+          <div class="space-row"><span class="tok">--space-2</span><span class="px">8px</span><span class="bar" style="width: 8px;"></span></div>
+          <div class="space-row"><span class="tok">--space-3</span><span class="px">12px</span><span class="bar" style="width: 12px;"></span></div>
+          <div class="space-row"><span class="tok">--space-4</span><span class="px">16px</span><span class="bar" style="width: 16px;"></span></div>
+          <div class="space-row"><span class="tok">--space-5</span><span class="px">20px</span><span class="bar" style="width: 20px;"></span></div>
+          <div class="space-row"><span class="tok">--space-6</span><span class="px">24px</span><span class="bar" style="width: 24px;"></span></div>
+          <div class="space-row"><span class="tok">--space-7</span><span class="px">32px</span><span class="bar" style="width: 32px;"></span></div>
+          <div class="space-row"><span class="tok">--space-8</span><span class="px">40px</span><span class="bar" style="width: 40px;"></span></div>
+          <div class="space-row"><span class="tok">--space-9</span><span class="px">48px</span><span class="bar" style="width: 48px;"></span></div>
+          <div class="space-row"><span class="tok">--space-10</span><span class="px">64px</span><span class="bar" style="width: 64px;"></span></div>
+          <div class="space-row"><span class="tok">--space-11</span><span class="px">80px</span><span class="bar" style="width: 80px;"></span></div>
+          <div class="space-row"><span class="tok">--space-12</span><span class="px">96px</span><span class="bar" style="width: 96px;"></span></div>
+        </div>
+      </div>
+
+      <!-- 1.4 Cantos -->
+      <div class="sub" id="cantos">
+        <div class="sub-head">
+          <h3>1.4 · Cantos</h3>
+          <p class="sub-lead">Material 3 é generoso com curvatura. <code>--radius-full</code> é usado em chips, FAB icon, avatares.</p>
+        </div>
+        <div class="radius-grid">
+          <div class="radius-card sm"><span class="tok">--radius-sm</span><div class="px">8px</div><div class="use">Chip, badge, input compacto</div></div>
+          <div class="radius-card md"><span class="tok">--radius-md</span><div class="px">12px</div><div class="use">Card, botão outline, FAB extended</div></div>
+          <div class="radius-card lg"><span class="tok">--radius-lg</span><div class="px">20px</div><div class="use">Modal, painel grande</div></div>
+          <div class="radius-card xl"><span class="tok">--radius-xl</span><div class="px">28px</div><div class="use">Dialog grande, hero card</div></div>
+          <div class="radius-card full"><span class="tok">--radius-full</span><div class="px">9999px</div><div class="use">Chip, pill button, avatar</div></div>
+        </div>
+      </div>
+
+      <!-- 1.5 Sombras -->
+      <div class="sub" id="sombras">
+        <div class="sub-head">
+          <h3>1.5 · Sombras</h3>
+          <p class="sub-lead">Sutis. Hierarquia se dá por superfície tonal, não por elevação dramática.</p>
+        </div>
+        <div class="shadow-grid">
+          <div class="shadow-card s1"><span class="tok">--shadow-1</span><div class="px">Hover de card</div></div>
+          <div class="shadow-card s2"><span class="tok">--shadow-2</span><div class="px">Dropdown, search ativa</div></div>
+          <div class="shadow-card s3"><span class="tok">--shadow-3</span><div class="px">Modal, toast, drawer</div></div>
+          <div class="shadow-card sf"><span class="tok">--shadow-fab</span><div class="px">FAB (sombra azul)</div></div>
+        </div>
+      </div>
+
+      <!-- 1.6 Motion -->
+      <div class="sub" id="motion">
+        <div class="sub-head">
+          <h3>1.6 · Motion</h3>
+          <p class="sub-lead">Easing único — <code>cubic-bezier(0.4, 0, 0.2, 1)</code>. Sem bounce, sem stagger dramático.</p>
+        </div>
+        <div class="motion-grid">
+          <div class="motion-card fade">
+            <span class="tok">--dur-fast</span><div style="font-size: var(--text-small); color: var(--text-secondary);">150ms · fade</div>
+            <div class="motion-demo"><div class="dot"></div></div>
+            <span class="hint">Passe o mouse</span>
+          </div>
+          <div class="motion-card slide">
+            <span class="tok">--dur-normal</span><div style="font-size: var(--text-small); color: var(--text-secondary);">200ms · slide</div>
+            <div class="motion-demo"><div class="dot"></div></div>
+            <span class="hint">Passe o mouse</span>
+          </div>
+          <div class="motion-card scale">
+            <span class="tok">--dur-slow</span><div style="font-size: var(--text-small); color: var(--text-secondary);">300ms · scale</div>
+            <div class="motion-demo"><div class="dot"></div></div>
+            <span class="hint">Passe o mouse</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 2 · COMPONENTES ============================== -->
+    <section class="section" id="componentes">
+      <header class="section-head">
+        <span class="section-eyebrow">Parte 2</span>
+        <h2>Componentes</h2>
+        <p class="section-lead">Peças reutilizáveis. Cada palco mostra um componente em seus estados e variações principais.</p>
+      </header>
+
+      <!-- 2.1 Botão -->
+      <div class="sub" id="botao">
+        <div class="sub-head"><h3>2.1 · Botão</h3></div>
+        <div class="stage">
+          <span class="stage-label">Variantes</span>
+          <div class="stage-row">
+            <button class="btn btn-primary">Salvar</button>
+            <button class="btn btn-secondary">Cancelar</button>
+            <button class="btn btn-outline">Ver detalhes</button>
+            <button class="btn btn-ghost">Ignorar</button>
+            <button class="btn btn-danger">Excluir</button>
+          </div>
+        </div>
+        <div class="stage">
+          <span class="stage-label">Tamanhos</span>
+          <div class="stage-row">
+            <button class="btn btn-primary btn-sm">Pequeno</button>
+            <button class="btn btn-primary">Médio</button>
+            <button class="btn btn-primary btn-lg">Grande</button>
+          </div>
+        </div>
+        <div class="stage">
+          <span class="stage-label">Com ícone</span>
+          <div class="stage-row">
+            <button class="btn btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Adicionar foto</button>
+            <button class="btn btn-outline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 12 2 16 6"/><line x1="12" y1="2" x2="12" y2="22"/></svg>Ordenar</button>
+            <button class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Selecionar tudo</button>
+          </div>
+        </div>
+        <div class="stage">
+          <span class="stage-label">Estado desabilitado</span>
+          <div class="stage-row">
+            <button class="btn btn-primary" disabled>Salvar</button>
+            <button class="btn btn-outline" disabled>Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 FAB -->
+      <div class="sub" id="fab">
+        <div class="sub-head"><h3>2.2 · FAB · Floating Action Button</h3><p class="sub-lead">Ação principal da página. Fica fixo no canto inferior direito.</p></div>
+        <div class="stage">
+          <span class="stage-label">Variantes</span>
+          <div class="stage-row" style="align-items: center;">
+            <button class="fab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Enviar fotos</button>
+            <button class="fab fab-yellow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Criar álbum</button>
+            <button class="fab fab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 Chip -->
+      <div class="sub" id="chip">
+        <div class="sub-head"><h3>2.3 · Chip</h3><p class="sub-lead">Filtros aplicáveis. Cor de fundo segue o acento da categoria quando relevante.</p></div>
+        <div class="stage">
+          <span class="stage-label">Filter chips</span>
+          <div class="stage-row">
+            <button class="chip">Todos</button>
+            <button class="chip active">Pedrinho<span class="x"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></button>
+            <button class="chip active">Aniversário<span class="x"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></button>
+            <button class="chip">Este ano<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <button class="chip dashed"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Adicionar filtro</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.4 Search bar -->
+      <div class="sub" id="search">
+        <div class="sub-head"><h3>2.4 · Busca</h3><p class="sub-lead">Pílula grande. Chip "IA" em roxo dentro do campo, sinalizando que aquele input entende linguagem natural.</p></div>
+        <div class="stage">
+          <span class="stage-label">Default</span>
+          <div class="search-bar">
+            <svg class="lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="text" placeholder="Buscar em todas as fotos" />
+            <button class="ia-chip">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+              IA
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.5 Input / Field -->
+      <div class="sub" id="input">
+        <div class="sub-head"><h3>2.5 · Campo de formulário</h3></div>
+        <div class="stage">
+          <span class="stage-label">Variações</span>
+          <div class="stage-grid">
+            <label class="field">
+              <span class="field-label">Título</span>
+              <input type="text" placeholder="Ex: Aniversário do Pedrinho" />
+            </label>
+            <label class="field">
+              <span class="field-label">Local</span>
+              <input type="text" placeholder="Casa da vovó" value="Casa da vovó, São Paulo" />
+            </label>
+            <label class="field">
+              <span class="field-label">Data do evento</span>
+              <input type="text" placeholder="14 de março de 2026" />
+              <span class="field-hint">Detectada automaticamente do EXIF se disponível.</span>
+            </label>
+            <label class="field">
+              <span class="field-label" style="color: var(--red);">Título</span>
+              <input type="text" placeholder="" value="" style="border-color: var(--red); box-shadow: 0 0 0 3px var(--red-soft);" />
+              <span class="field-hint field-error">O título não pode ficar vazio.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.6 Tabs -->
+      <div class="sub" id="tabs">
+        <div class="sub-head"><h3>2.6 · Abas</h3><p class="sub-lead">Alternam o modo de visualização. Ativa em azul com sublinhado de 3px.</p></div>
+        <div class="stage">
+          <span class="stage-label">Modo de visualização</span>
+          <nav class="tabs">
+            <a class="tab active" href="#">Grid</a>
+            <a class="tab" href="#">Linha do tempo</a>
+            <a class="tab" href="#">Calendário</a>
+            <a class="tab" href="#">Mapa</a>
+            <a class="tab" href="#">Lista</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- 2.7 Toast -->
+      <div class="sub" id="toast">
+        <div class="sub-head"><h3>2.7 · Toast / Snackbar</h3></div>
+        <div class="stage">
+          <span class="stage-label">Confirmação com ação</span>
+          <div class="toast">
+            <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>5 fotos</strong> adicionadas ao álbum Aniversário do Pedrinho</span>
+            <button class="action">Desfazer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.8 Avatar -->
+      <div class="sub" id="avatar">
+        <div class="sub-head"><h3>2.8 · Avatar</h3></div>
+        <div class="stage">
+          <span class="stage-label">Variantes e tamanhos</span>
+          <div class="stage-row">
+            <span class="avatar sm"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=120&q=80&auto=format&fit=crop" alt="" /></span>
+            <span class="avatar md"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=120&q=80&auto=format&fit=crop" alt="" /></span>
+            <span class="avatar lg"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=160&q=80&auto=format&fit=crop" alt="" /></span>
+            <span class="avatar lg blue">DP</span>
+            <span class="avatar lg green">VL</span>
+            <span class="avatar lg yellow">PC</span>
+            <span class="avatar lg empty">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.9 Cartão de foto -->
+      <div class="sub" id="card-foto">
+        <div class="sub-head"><h3>2.9 · Cartão de foto</h3><p class="sub-lead">Indicadores no canto inferior direito (favorito, geo, pessoa marcada). Overlay no hover com ação de seleção.</p></div>
+        <div class="stage">
+          <span class="stage-label">Estados</span>
+          <div class="stage-grid" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
+            <div class="photo-card">
+              <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80&auto=format&fit=crop&crop=faces" alt="" />
+              <div class="photo-overlay"></div>
+              <div class="photo-actions"><button class="photo-act"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></button></div>
+            </div>
+            <div class="photo-card">
+              <img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80&auto=format&fit=crop" alt="" />
+              <div class="photo-overlay"></div>
+              <div class="photo-actions"><button class="photo-act"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></button></div>
+              <div class="photo-indicators">
+                <span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span>
+                <span class="ind geo"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                <span class="ind people"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="3"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg></span>
+              </div>
+            </div>
+            <div class="photo-card selected">
+              <img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=400&q=80&auto=format&fit=crop" alt="" />
+              <div class="photo-overlay" style="opacity: 1;"></div>
+              <div class="photo-actions" style="opacity: 1;"><button class="photo-act checked"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.10 Card de álbum -->
+      <div class="sub" id="card-album">
+        <div class="sub-head"><h3>2.10 · Cartão de álbum</h3></div>
+        <div class="stage">
+          <span class="stage-label">Default</span>
+          <div class="stage-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">32 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--yellow);"></span>Aniversário do Pedrinho</h4>
+                <p class="album-meta">Março 2026 · Pedrinho · Família</p>
+              </div>
+            </article>
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">58 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--green);"></span>Verão na praia</h4>
+                <p class="album-meta">Janeiro 2026 · Família · Maresias</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.11 Card de pessoa -->
+      <div class="sub" id="card-pessoa">
+        <div class="sub-head"><h3>2.11 · Cartão de pessoa</h3></div>
+        <div class="stage">
+          <span class="stage-label">Default</span>
+          <div class="stage-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+            <article class="person-card">
+              <span class="avatar ph-avatar lg blue">PC</span>
+              <h4 class="person-name">Pedrinho</h4>
+              <p class="person-meta">208 fotos</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg green">VL</span>
+              <h4 class="person-name">Vovó Lúcia</h4>
+              <p class="person-meta">76 fotos · Avó</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg yellow">TA</span>
+              <h4 class="person-name">Tia Ana</h4>
+              <p class="person-meta">42 fotos · Tia</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg" style="background: var(--purple); color: #fff;">DB</span>
+              <h4 class="person-name">Dindo Bento</h4>
+              <p class="person-meta">31 fotos · Padrinho</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.12 Tag pill -->
+      <div class="sub" id="tag">
+        <div class="sub-head"><h3>2.12 · Tag</h3><p class="sub-lead">Pill colorida com contagem. Cor pode ser arbitrária por tag.</p></div>
+        <div class="stage">
+          <span class="stage-label">Variantes</span>
+          <div class="stage-row">
+            <span class="tag-pill">Aniversário <span class="tag-count">· 32</span></span>
+            <span class="tag-pill y">Família <span class="tag-count">· 188</span></span>
+            <span class="tag-pill g">Praia <span class="tag-count">· 58</span></span>
+            <span class="tag-pill b">Casa <span class="tag-count">· 94</span></span>
+            <span class="tag-pill p">Viagem <span class="tag-count">· 47</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.13 Empty state -->
+      <div class="sub" id="empty">
+        <div class="sub-head"><h3>2.13 · Empty state</h3></div>
+        <div class="stage">
+          <span class="stage-label">Sem fotos</span>
+          <div class="empty-state">
+            <div class="illu">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+            <h4>Ainda não há fotos por aqui</h4>
+            <p>Suba a primeira memória — pode ser um sábado qualquer ou um momento que você não quer esquecer.</p>
+            <button class="btn btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Enviar fotos</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================== 3 · PADRÕES ============================== -->
+    <section class="section" id="padroes">
+      <header class="section-head">
+        <span class="section-eyebrow">Parte 3</span>
+        <h2>Padrões de layout</h2>
+        <p class="section-lead">A anatomia padrão de toda tela: sidebar fixa à esquerda + topbar com título e busca + área de conteúdo com cabeçalho colorido por categoria.</p>
+      </header>
+
+      <div class="sub">
+        <div class="sub-head"><h3>3.1 · Anatomia</h3></div>
+
+        <div class="layout-demo">
+          <aside class="ld-sidebar">
+            <div class="ld-brand">M  Memórias</div>
+            <div class="ld-item active"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Fotos</div>
+            <div class="ld-item"><span class="dot-cat" style="background: var(--yellow);"></span>Álbuns</div>
+            <div class="ld-item"><span class="dot-cat" style="background: var(--green);"></span>Pessoas</div>
+            <div class="ld-item"><span class="dot-cat" style="background: var(--red);"></span>Tags</div>
+            <div class="ld-item"><span class="dot-cat" style="background: var(--purple);"></span>Favoritos</div>
+          </aside>
+          <div>
+            <div class="ld-topbar">
+              <strong style="font-weight: 500;">Fotos</strong>
+              <button class="icon-btn sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+            </div>
+            <div class="ld-canvas">Área de conteúdo · cabeçalho colorido + corpo</div>
+          </div>
+        </div>
+
+        <p style="margin-top: var(--space-5); font-size: var(--text-small); color: var(--text-secondary); max-width: 70ch;">
+          <strong>Largura da sidebar:</strong> 280px no desktop. Vira drawer recolhível abaixo de 760px.<br>
+          <strong>Cabeçalho colorido:</strong> cada categoria principal (Fotos, Álbuns, Pessoas, Tags, Favoritos) recebe header com fundo na cor suave da categoria + ícone na cor cheia. Isso garante que o usuário sabe imediatamente onde está.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 4 · TELAS ============================== -->
+    <section class="section" id="telas">
+      <header class="section-head">
+        <span class="section-eyebrow">Parte 4</span>
+        <h2>Telas</h2>
+        <p class="section-lead">Recortes navegáveis das principais áreas do app. Cada tela usa o cabeçalho colorido da categoria + os componentes catalogados acima.</p>
+      </header>
+
+      <!-- 4.1 Fotos · Grid -->
+      <article class="screen" id="screen-fotos">
+        <div class="screen-label">
+          <span class="name">Fotos · Grid</span>
+          <span class="path">/fotos</span>
+        </div>
+        <header class="cat-header fotos">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Fotos</h3>
+            <p class="cat-sub">312 itens · Todas as memórias</p>
+          </div>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <button class="btn btn-outline btn-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 12 2 16 6"/><line x1="12" y1="2" x2="12" y2="22"/></svg>Ordenar</button>
+            <button class="btn btn-primary btn-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Enviar</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <nav class="tabs">
+            <a class="tab active" href="#">Grid</a>
+            <a class="tab" href="#">Linha do tempo</a>
+            <a class="tab" href="#">Calendário</a>
+            <a class="tab" href="#">Mapa</a>
+            <a class="tab" href="#">Lista</a>
+          </nav>
+          <div class="filters-row">
+            <button class="chip active">Pedrinho<span class="x"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></button>
+            <button class="chip">Este ano<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <button class="chip">Favoritas</button>
+            <button class="chip dashed"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Filtro</button>
+          </div>
+
+          <div class="month-group">
+            <header class="month-head">
+              <h4 class="month-title">Março de 2026</h4>
+              <span class="month-sub">8 fotos · Casa da vovó</span>
+            </header>
+            <div class="ph-grid">
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80&auto=format&fit=crop&crop=faces" alt="" /><div class="photo-overlay"></div><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span><span class="ind people"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="3"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg></span></div></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-overlay"></div><div class="photo-indicators"><span class="ind geo"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span></div></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-overlay"></div><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+            </div>
+          </div>
+
+          <div class="month-group">
+            <header class="month-head">
+              <h4 class="month-title">Fevereiro de 2026</h4>
+              <span class="month-sub">4 fotos</span>
+            </header>
+            <div class="ph-grid">
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1444930694458-01babf71870b?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1530043044085-ba48bd2d97e9?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.2 Fotos · Calendário -->
+      <article class="screen" id="screen-calendario">
+        <div class="screen-label">
+          <span class="name">Fotos · Calendário</span>
+          <span class="path">/fotos?view=calendario</span>
+        </div>
+        <header class="cat-header fotos">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Calendário</h3>
+            <p class="cat-sub">Localize fotos por data — bolinhas coloridas indicam categoria</p>
+          </div>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <button class="btn btn-outline btn-sm">Hoje</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <nav class="tabs">
+            <a class="tab" href="#">Grid</a>
+            <a class="tab" href="#">Linha do tempo</a>
+            <a class="tab active" href="#">Calendário</a>
+            <a class="tab" href="#">Mapa</a>
+            <a class="tab" href="#">Lista</a>
+          </nav>
+
+          <div class="cal-wrap">
+            <div class="cal">
+              <header class="cal-head">
+                <h4 class="cal-title">Março de 2026</h4>
+                <div class="cal-nav">
+                  <button class="icon-btn sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="icon-btn sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+              </header>
+              <div class="cal-weekdays">
+                <div class="wd">D</div><div class="wd">S</div><div class="wd">T</div><div class="wd">Q</div><div class="wd">Q</div><div class="wd">S</div><div class="wd">S</div>
+              </div>
+              <div class="cal-grid">
+                <div class="day outside"><span class="day-num">22</span></div>
+                <div class="day outside"><span class="day-num">23</span></div>
+                <div class="day outside"><span class="day-num">24</span></div>
+                <div class="day outside"><span class="day-num">25</span></div>
+                <div class="day outside"><span class="day-num">26</span></div>
+                <div class="day outside"><span class="day-num">27</span></div>
+                <div class="day outside"><span class="day-num">28</span></div>
+
+                <div class="day"><span class="day-num">1</span><div class="day-dots"><span class="dt b"></span><span class="day-count">3</span></div></div>
+                <div class="day"><span class="day-num">2</span></div>
+                <div class="day"><span class="day-num">3</span><div class="day-dots"><span class="dt y"></span><span class="day-count">2</span></div></div>
+                <div class="day"><span class="day-num">4</span></div>
+                <div class="day"><span class="day-num">5</span><div class="day-dots"><span class="dt g"></span><span class="dt p"></span><span class="day-count">8</span></div></div>
+                <div class="day"><span class="day-num">6</span><div class="day-dots"><span class="dt b"></span><span class="day-count">1</span></div></div>
+                <div class="day"><span class="day-num">7</span></div>
+
+                <div class="day"><span class="day-num">8</span></div>
+                <div class="day"><span class="day-num">9</span><div class="day-dots"><span class="dt b"></span><span class="dt y"></span><span class="day-count">5</span></div></div>
+                <div class="day"><span class="day-num">10</span></div>
+                <div class="day"><span class="day-num">11</span><div class="day-dots"><span class="dt r"></span><span class="day-count">2</span></div></div>
+                <div class="day"><span class="day-num">12</span></div>
+                <div class="day"><span class="day-num">13</span><div class="day-dots"><span class="dt g"></span><span class="day-count">4</span></div></div>
+                <div class="day selected"><span class="day-num">14</span><div class="day-dots"><span class="dt b"></span><span class="dt y"></span><span class="dt p"></span><span class="day-count">12</span></div></div>
+
+                <div class="day"><span class="day-num">15</span></div>
+                <div class="day"><span class="day-num">16</span><div class="day-dots"><span class="dt b"></span><span class="day-count">2</span></div></div>
+                <div class="day"><span class="day-num">17</span></div>
+                <div class="day"><span class="day-num">18</span></div>
+                <div class="day"><span class="day-num">19</span><div class="day-dots"><span class="dt y"></span><span class="day-count">3</span></div></div>
+                <div class="day"><span class="day-num">20</span></div>
+                <div class="day"><span class="day-num">21</span><div class="day-dots"><span class="dt g"></span><span class="dt b"></span><span class="day-count">7</span></div></div>
+
+                <div class="day today"><span class="day-num">22</span><div class="day-dots"><span class="dt b"></span><span class="day-count">4</span></div></div>
+                <div class="day"><span class="day-num">23</span></div>
+                <div class="day"><span class="day-num">24</span></div>
+                <div class="day"><span class="day-num">25</span><div class="day-dots"><span class="dt p"></span><span class="day-count">1</span></div></div>
+                <div class="day"><span class="day-num">26</span></div>
+                <div class="day"><span class="day-num">27</span></div>
+                <div class="day"><span class="day-num">28</span><div class="day-dots"><span class="dt y"></span><span class="dt r"></span><span class="day-count">6</span></div></div>
+
+                <div class="day"><span class="day-num">29</span></div>
+                <div class="day"><span class="day-num">30</span></div>
+                <div class="day"><span class="day-num">31</span></div>
+                <div class="day outside"><span class="day-num">1</span></div>
+                <div class="day outside"><span class="day-num">2</span></div>
+                <div class="day outside"><span class="day-num">3</span></div>
+                <div class="day outside"><span class="day-num">4</span></div>
+              </div>
+            </div>
+
+            <aside class="day-panel">
+              <h4 class="day-big">14 de março</h4>
+              <p class="day-sub">sábado · 12 fotos</p>
+              <span class="meta-chip">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+                Aniversário do Pedrinho
+              </span>
+              <div class="day-photos">
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&q=80&auto=format&fit=crop&crop=faces" alt="" />
+                <img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=300&q=80&auto=format&fit=crop" alt="" />
+                <img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=300&q=80&auto=format&fit=crop" alt="" />
+                <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=300&q=80&auto=format&fit=crop" alt="" />
+              </div>
+              <button class="btn btn-outline" style="width: 100%; justify-content: center;">Ver todas no grid</button>
+            </aside>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.3 Álbuns -->
+      <article class="screen" id="screen-albuns">
+        <div class="screen-label">
+          <span class="name">Álbuns</span>
+          <span class="path">/albuns</span>
+        </div>
+        <header class="cat-header albuns">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Álbuns</h3>
+            <p class="cat-sub">14 álbuns · Por evento, viagem ou tema</p>
+          </div>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <button class="btn btn-outline btn-sm">Ordenar</button>
+            <button class="btn btn-sm" style="background: var(--yellow); color: var(--text-primary);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Criar álbum</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <div class="filters-row">
+            <button class="chip" style="background: var(--yellow-soft); border-color: var(--yellow-soft); color: var(--yellow-strong);">Todos</button>
+            <button class="chip">Recentes</button>
+            <button class="chip">Favoritos</button>
+          </div>
+          <div class="stage-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">32 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--yellow);"></span>Aniversário do Pedrinho</h4>
+                <p class="album-meta">Março 2026 · Casa da vovó</p>
+              </div>
+            </article>
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">58 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--green);"></span>Verão na praia</h4>
+                <p class="album-meta">Janeiro 2026 · Maresias</p>
+              </div>
+            </article>
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">24 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--red);"></span>Natal 2025</h4>
+                <p class="album-meta">Dezembro 2025 · Casa da vovó</p>
+              </div>
+            </article>
+            <article class="album-card">
+              <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80&auto=format&fit=crop" alt="" />
+                <span class="count-badge">47 fotos</span>
+              </div>
+              <div class="album-info">
+                <h4 class="album-title"><span class="album-color-tag" style="background: var(--purple);"></span>Primeira viagem</h4>
+                <p class="album-meta">Outubro 2025 · Campos do Jordão</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.4 Pessoas -->
+      <article class="screen" id="screen-pessoas">
+        <div class="screen-label">
+          <span class="name">Pessoas</span>
+          <span class="path">/pessoas</span>
+        </div>
+        <header class="cat-header pessoas">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c1.5-3.5 3.5-5 6-5s4.5 1.5 6 5"/><path d="M16 4c1.7.5 3 2 3 4s-1.3 3.5-3 4"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Pessoas</h3>
+            <p class="cat-sub">8 pessoas marcadas em suas fotos</p>
+          </div>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <button class="btn btn-sm" style="background: var(--green); color: #fff;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Adicionar pessoa</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <div class="stage-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+            <article class="person-card">
+              <span class="avatar ph-avatar lg blue">PC</span>
+              <h4 class="person-name">Pedrinho</h4>
+              <p class="person-meta">208 fotos · Filho</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg green">VL</span>
+              <h4 class="person-name">Vovó Lúcia</h4>
+              <p class="person-meta">76 fotos · Avó</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg yellow">TA</span>
+              <h4 class="person-name">Tia Ana</h4>
+              <p class="person-meta">42 fotos · Tia</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg" style="background: var(--purple); color: #fff;">DB</span>
+              <h4 class="person-name">Dindo Bento</h4>
+              <p class="person-meta">31 fotos · Padrinho</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg" style="background: var(--red); color: #fff;">MA</span>
+              <h4 class="person-name">Vovô Mário</h4>
+              <p class="person-meta">28 fotos · Avô</p>
+            </article>
+            <article class="person-card">
+              <span class="avatar ph-avatar lg" style="background: var(--blue-strong); color: #fff;">CB</span>
+              <h4 class="person-name">Camila</h4>
+              <p class="person-meta">154 fotos · Esposa</p>
+            </article>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.5 Tags -->
+      <article class="screen" id="screen-tags">
+        <div class="screen-label">
+          <span class="name">Tags</span>
+          <span class="path">/tags</span>
+        </div>
+        <header class="cat-header tags">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6c-.8.8-2 .8-2.8 0L3 13V3h10l7.6 7.6c.8.8.8 2 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Tags</h3>
+            <p class="cat-sub">23 tags criadas · Use pra agrupar memórias por tema</p>
+          </div>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <button class="btn btn-sm" style="background: var(--red); color: #fff;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Criar tag</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <p class="subsub-title">Mais usadas</p>
+          <div class="stage-row" style="margin-bottom: var(--space-7); gap: var(--space-3);">
+            <span class="tag-pill y" style="font-size: var(--text-h4); padding: 10px 20px;">Família <span class="tag-count">· 188</span></span>
+            <span class="tag-pill b" style="font-size: var(--text-body-lg); padding: 8px 18px;">Casa <span class="tag-count">· 94</span></span>
+            <span class="tag-pill g" style="font-size: var(--text-body-lg); padding: 8px 18px;">Praia <span class="tag-count">· 58</span></span>
+            <span class="tag-pill" style="font-size: var(--text-body); padding: 6px 16px;">Aniversário <span class="tag-count">· 32</span></span>
+            <span class="tag-pill p" style="font-size: var(--text-body); padding: 6px 16px;">Viagem <span class="tag-count">· 47</span></span>
+          </div>
+
+          <p class="subsub-title">Todas as tags</p>
+          <div class="stage-row" style="gap: var(--space-2);">
+            <span class="tag-pill">Bolo · 12</span>
+            <span class="tag-pill b">Quintal · 28</span>
+            <span class="tag-pill g">Pet · 18</span>
+            <span class="tag-pill y">Sorriso · 64</span>
+            <span class="tag-pill p">Natureza · 22</span>
+            <span class="tag-pill">Pintura · 8</span>
+            <span class="tag-pill b">Pôr do sol · 14</span>
+            <span class="tag-pill g">Brinquedo · 31</span>
+            <span class="tag-pill y">Vovó · 76</span>
+            <span class="tag-pill">Comida · 19</span>
+            <span class="tag-pill p">Sítio · 28</span>
+            <span class="tag-pill b">Banho · 11</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.6 Favoritos -->
+      <article class="screen" id="screen-favoritos">
+        <div class="screen-label">
+          <span class="name">Favoritos</span>
+          <span class="path">/favoritos</span>
+        </div>
+        <header class="cat-header favoritos">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></div>
+          <div class="cat-text">
+            <h3 class="cat-title">Favoritos</h3>
+            <p class="cat-sub">42 fotos marcadas com estrela</p>
+          </div>
+        </header>
+        <div class="screen-body">
+          <div class="filters-row">
+            <button class="chip active" style="background: var(--purple-soft); border-color: var(--purple-soft); color: var(--purple);">Todas</button>
+            <button class="chip">Este ano</button>
+            <button class="chip">Pedrinho</button>
+          </div>
+          <div class="ph-grid">
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80&auto=format&fit=crop&crop=faces" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1530043044085-ba48bd2d97e9?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&q=80&auto=format&fit=crop" alt="" /><div class="photo-indicators"><span class="ind fav"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg></span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4.7 Foto individual -->
+      <article class="screen" id="screen-foto">
+        <div class="screen-label">
+          <span class="name">Foto individual · edição</span>
+          <span class="path">/fotos/4831</span>
+        </div>
+        <div class="screen-body">
+          <div class="photo-single">
+            <div class="ps-image">
+              <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=900&q=80&auto=format&fit=crop" alt="" />
+            </div>
+            <aside class="ps-panel">
+              <div>
+                <h4 class="ps-date">14 de março</h4>
+                <p class="ps-place">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Casa da vovó, São Paulo
+                </p>
+              </div>
+
+              <div class="ps-block">
+                <p class="ps-block-label">História</p>
+                <p class="ps-story">Foi um sábado morno, o quintal cheio de gente. O Pedrinho passou o dia entre os pés dos primos, com a boca pintada de bolo, sem ligar pra ninguém.</p>
+              </div>
+
+              <div class="ps-block">
+                <p class="ps-block-label">Pessoas marcadas</p>
+                <div class="people-row">
+                  <span class="people-chip"><span class="avatar sm blue">PC</span> Pedrinho</span>
+                  <span class="people-chip"><span class="avatar sm green">VL</span> Vovó Lúcia</span>
+                  <span class="people-chip"><span class="avatar sm yellow">TA</span> Tia Ana</span>
+                  <button class="chip dashed btn-sm"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Adicionar</button>
+                </div>
+              </div>
+
+              <div class="ps-block">
+                <p class="ps-block-label">Tags</p>
+                <div class="people-row">
+                  <span class="tag-pill">Aniversário</span>
+                  <span class="tag-pill y">Família</span>
+                  <span class="tag-pill b">Casa</span>
+                </div>
+              </div>
+
+              <div class="ps-block" style="display: flex; gap: var(--space-2);">
+                <button class="btn btn-outline btn-sm" style="flex: 1; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.1 8.6 22 9.3 16.9 14.1 18.4 21 12 17.5 5.6 21 7.1 14.1 2 9.3 8.9 8.6 12 2"/></svg>Favoritar</button>
+                <button class="btn btn-outline btn-sm" style="flex: 1; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>Adicionar a álbum</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ============================== 5 · VOCABULÁRIO ============================== -->
+    <section class="section" id="vocabulario">
+      <header class="section-head">
+        <span class="section-eyebrow">Parte 5</span>
+        <h2>Vocabulário</h2>
+        <p class="section-lead">Convenções de escrita e formatação que toda tela deve respeitar.</p>
+      </header>
+
+      <div class="sub">
+        <div class="sub-head"><h3>5.1 · Tratamento de data</h3><p class="sub-lead">Sempre em PT-BR. Nunca usar formatos numéricos (03/14/2026) em UI visível — só em tooltips ou campos técnicos.</p></div>
+        <table class="tk-table">
+          <thead><tr><th>Onde</th><th>Formato</th><th>Exemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Cabeçalho de mês (Linha do tempo / Calendário)</td><td>Mês de Ano</td><td>Março de 2026</td></tr>
+            <tr><td>Data principal de uma foto</td><td>Dia de mês</td><td>14 de março</td></tr>
+            <tr><td>Quando o ano importa</td><td>Dia de mês de ano</td><td>14 de março de 2026</td></tr>
+            <tr><td>Adicionado recentemente</td><td>Relativo</td><td>há 2 dias</td></tr>
+            <tr><td>Tooltip / campo técnico</td><td>Numérico</td><td>2026-03-14 18:32</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub">
+        <div class="sub-head"><h3>5.2 · Nomes das categorias</h3><p class="sub-lead">Cada categoria tem cor própria e tom de voz. Mantenha consistência.</p></div>
+        <table class="tk-table">
+          <thead><tr><th>Categoria</th><th>Cor</th><th>Verbo da ação principal</th></tr></thead>
+          <tbody>
+            <tr><td>Fotos</td><td><span class="album-color-tag" style="background: var(--blue); display: inline-block; margin-right: 8px;"></span>Azul</td><td>Enviar fotos</td></tr>
+            <tr><td>Álbuns</td><td><span class="album-color-tag" style="background: var(--yellow); display: inline-block; margin-right: 8px;"></span>Amarelo</td><td>Criar álbum</td></tr>
+            <tr><td>Pessoas</td><td><span class="album-color-tag" style="background: var(--green); display: inline-block; margin-right: 8px;"></span>Verde</td><td>Adicionar pessoa</td></tr>
+            <tr><td>Tags</td><td><span class="album-color-tag" style="background: var(--red); display: inline-block; margin-right: 8px;"></span>Vermelho</td><td>Criar tag</td></tr>
+            <tr><td>Favoritos</td><td><span class="album-color-tag" style="background: var(--purple); display: inline-block; margin-right: 8px;"></span>Roxo</td><td>Favoritar (estrela)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub">
+        <div class="sub-head"><h3>5.3 · Telas que faltam pra v0.3</h3></div>
+        <p style="font-size: var(--text-small); color: var(--text-secondary); max-width: 64ch;">
+          Esta v0.2 cobre o essencial. Próxima versão (v0.3) deve incluir: <strong>Login</strong>, <strong>Mapa</strong>, <strong>Lista</strong>, <strong>Lixeira</strong>, <strong>Modal de upload em lote</strong>, <strong>Dialog de confirmação</strong>, <strong>Dropdown menu</strong>, <strong>Loading skeleton</strong>, <strong>Date picker</strong>, <strong>Combobox autocomplete</strong>.
+        </p>
+      </div>
+    </section>
+
+    <footer style="padding: var(--space-9) 0 var(--space-10); border-top: 1px solid var(--border); margin-top: var(--space-9); color: var(--text-tertiary); font-size: var(--text-small); text-align: center;">
+      Portal de Memórias · Design System v0.2 · 2026
+    </footer>
+
+  </div>
+
+</body>
+</html>
