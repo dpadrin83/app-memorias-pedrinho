@@ -21,14 +21,23 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
   try {
     const supabase = await createClient();
 
+    let user = null;
+
     const {
-      data: { user },
+      data: { user: verifiedUser },
       error: userError,
     } = await supabase.auth.getUser();
 
-    if (userError) {
-      console.error("[auth] getUser:", userError.message);
-      return null;
+    if (!userError && verifiedUser) {
+      user = verifiedUser;
+    } else {
+      if (userError) {
+        console.error("[auth] getUser:", userError.message);
+      }
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      user = session?.user ?? null;
     }
 
     if (!user?.email) return null;

@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { isPublicSupabaseEnvConfigured } from "@/lib/supabase/env";
 
 type LoginFormProps = {
   serverError?: string;
 };
 
 export function LoginForm({ serverError }: LoginFormProps) {
-  const router = useRouter();
   const [error, setError] = useState<string | undefined>(serverError);
   const [pending, setPending] = useState(false);
 
@@ -17,6 +15,12 @@ export function LoginForm({ serverError }: LoginFormProps) {
     event.preventDefault();
     setPending(true);
     setError(undefined);
+
+    if (!isPublicSupabaseEnvConfigured()) {
+      setError("Configuração Supabase ausente. Verifique as variáveis na Vercel.");
+      setPending(false);
+      return;
+    }
 
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email") ?? "").trim().toLowerCase();
@@ -28,46 +32,28 @@ export function LoginForm({ serverError }: LoginFormProps) {
       return;
     }
 
-    const supabase = createClient();
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "same-origin",
+      });
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+      const data = (await response.json()) as { ok?: boolean; error?: string };
 
-    if (signInError) {
-      setError("Email ou senha incorretos.");
+      if (!response.ok) {
+        setError(data.error ?? "Não foi possível entrar. Tente de novo.");
+        setPending(false);
+        return;
+      }
+
+      // Recarregamento completo para o servidor ler os cookies de sessão
+      window.location.assign("/");
+    } catch {
+      setError("Erro de rede. Verifique a conexão e tente de novo.");
       setPending(false);
-      return;
     }
-
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user?.email) {
-      await supabase.auth.signOut();
-      setError("Não foi possível validar a sessão.");
-      setPending(false);
-      return;
-    }
-
-    const { data: allowed, error: allowedError } = await supabase
-      .from("allowed_emails")
-      .select("id")
-      .eq("email", user.email.toLowerCase())
-      .maybeSingle();
-
-    if (allowedError || !allowed) {
-      await supabase.auth.signOut();
-      setError("Este email não está autorizado a acessar o portal.");
-      setPending(false);
-      return;
-    }
-
-    router.replace("/");
-    router.refresh();
   }
 
   return (
