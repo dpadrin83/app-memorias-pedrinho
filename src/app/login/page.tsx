@@ -1,36 +1,43 @@
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/auth/login-form";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
+import { isPublicSupabaseEnvConfigured } from "@/lib/supabase/env";
+
+export const dynamic = "force-dynamic";
 
 type LoginPageProps = {
-  searchParams: Promise<{ error?: string }>;
+  searchParams?: Promise<{ error?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
-
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!isPublicSupabaseEnvConfigured()) {
     return (
       <div className="login-page">
         <div className="login-card">
-          <p className="login-sub" style={{ color: "var(--destructive, #b91c1c)" }}>
+          <p
+            className="login-sub"
+            style={{ color: "var(--destructive, #b91c1c)" }}
+          >
             Configuração incompleta na Vercel: defina{" "}
             <strong>NEXT_PUBLIC_SUPABASE_URL</strong> e{" "}
-            <strong>NEXT_PUBLIC_SUPABASE_ANON_KEY</strong> (anon/publishable do
-            Supabase) e faça redeploy.
+            <strong>NEXT_PUBLIC_SUPABASE_ANON_KEY</strong> (chave anon/publishable
+            do Supabase), salve e faça <strong>Redeploy</strong> do projeto.
           </p>
         </div>
       </div>
     );
   }
 
-  const user = await getCurrentUser();
-  if (user) {
-    redirect("/");
+  try {
+    const user = await getCurrentUser();
+    if (user) {
+      redirect("/");
+    }
+  } catch (error) {
+    console.error("[login] sessão:", error);
   }
 
-  const params = await searchParams;
+  const params = searchParams ? await searchParams : {};
   const serverError =
     params.error === "unauthorized"
       ? "Este email não está autorizado a acessar o portal."

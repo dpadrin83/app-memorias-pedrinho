@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { isPublicSupabaseEnvConfigured } from "@/lib/supabase/env";
 import type { CurrentUser } from "./types";
 
 function getInitials(name: string | null, email: string): string {
@@ -13,36 +14,58 @@ function getInitials(name: string | null, email: string): string {
 }
 
 export async function getCurrentUser(): Promise<CurrentUser | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  if (!isPublicSupabaseEnvConfigured()) {
+    return null;
+  }
 
-  if (!user?.email) return null;
+  try {
+    const supabase = await createClient();
 
-  const email = user.email.toLowerCase();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
-  const { data: allowed } = await supabase
-    .from("allowed_emails")
-    .select("id")
-    .eq("email", email)
-    .maybeSingle();
+    if (sessionError) {
+      console.error("[auth] getSession:", sessionError.message);
+      return null;
+    }
 
-  if (!allowed) return null;
+    const user = session?.user;
+    if (!user?.email) return null;
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, email, name")
-    .eq("id", user.id)
-    .maybeSingle();
+    const email = user.email.toLowerCase();
 
-  const displayName = profile?.name ?? null;
-  const displayEmail = profile?.email ?? user.email;
+    const { data: allowed, error: allowedError } = await supabase
+      .from("allowed_emails")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
 
-  return {
-    id: user.id,
-    email: displayEmail,
-    name: displayName,
-    initials: getInitials(displayName, displayEmail),
-  };
+    if (allowedError) {
+      console.error("[auth] allowed_emails:", allowedError.message);
+      return null;
+    }
+
+    if (!allowed) return null;
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id, email, name")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    const displayName = profile?.name ?? null;
+    const displayEmail = profile?.email ?? user.email;
+
+    return {
+      id: user.id,
+      email: displayEmail,
+      name: displayName,
+      initials: getInitials(displayName, displayEmail),
+    };
+  } catch (error) {
+    console.error("[auth] getCurrentUser:", error);
+    return null;
+  }
 }
