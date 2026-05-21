@@ -22,16 +22,15 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     const supabase = await createClient();
 
     const {
-      data: { session },
-      error: sessionError,
-    } = await supabase.auth.getSession();
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-    if (sessionError) {
-      console.error("[auth] getSession:", sessionError.message);
+    if (userError) {
+      console.error("[auth] getUser:", userError.message);
       return null;
     }
 
-    const user = session?.user;
     if (!user?.email) return null;
 
     const email = user.email.toLowerCase();

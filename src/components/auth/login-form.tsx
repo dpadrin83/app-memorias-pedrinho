@@ -1,20 +1,77 @@
 "use client";
 
-import { useActionState } from "react";
-import { signIn, type AuthActionState } from "@/lib/auth/actions";
-
-const initialState: AuthActionState = {};
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 type LoginFormProps = {
   serverError?: string;
 };
 
 export function LoginForm({ serverError }: LoginFormProps) {
-  const [state, formAction, pending] = useActionState(signIn, initialState);
-  const error = state.error ?? serverError;
+  const router = useRouter();
+  const [error, setError] = useState<string | undefined>(serverError);
+  const [pending, setPending] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    setError(undefined);
+
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") ?? "").trim().toLowerCase();
+    const password = String(formData.get("password") ?? "");
+
+    if (!email || !password) {
+      setError("Preencha email e senha.");
+      setPending(false);
+      return;
+    }
+
+    const supabase = createClient();
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      setError("Email ou senha incorretos.");
+      setPending(false);
+      return;
+    }
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user?.email) {
+      await supabase.auth.signOut();
+      setError("Não foi possível validar a sessão.");
+      setPending(false);
+      return;
+    }
+
+    const { data: allowed, error: allowedError } = await supabase
+      .from("allowed_emails")
+      .select("id")
+      .eq("email", user.email.toLowerCase())
+      .maybeSingle();
+
+    if (allowedError || !allowed) {
+      await supabase.auth.signOut();
+      setError("Este email não está autorizado a acessar o portal.");
+      setPending(false);
+      return;
+    }
+
+    router.replace("/");
+    router.refresh();
+  }
 
   return (
-    <form action={formAction} className="login-form">
+    <form onSubmit={handleSubmit} className="login-form">
       <div className="field">
         <label className="field-label" htmlFor="login-email">
           Email
