@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Busca por IA · Prompt 12</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 12 — Busca semântica</strong> ·
+      chip <strong>IA</strong> ativo em roxo ·
+      <code>/search?ai=1&amp;q=...</code> ·
+      embeddings OpenAI + pgvector ·
+      <a href="index.html">índice</a>
+    </div>
+
+    <div class="app-shell">
+      <aside class="ld-sidebar app-sidebar" style="min-height:100vh">
+        <a class="ld-brand" href="index.html"><span class="mark">M</span> Memórias</a>
+        <a class="ld-item active" href="14-busca-ia.html">Busca</a>
+      </aside>
+      <div class="app-main">
+        <div class="ld-topbar"><span class="ld-topbar-title">Busca</span></div>
+        <div class="screen-body search-page">
+          <form class="search-bar" style="max-width:100%">
+            <svg class="lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" value="fotos na praia do ano passado" placeholder="Descreva em linguagem natural" />
+            <span class="ia-chip ia-chip-active" style="cursor:default">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+              IA
+            </span>
+          </form>
+
+          <p class="search-results-meta" style="margin:var(--space-4) 0">
+            12 resultados · busca por IA para <strong>&ldquo;fotos na praia do ano passado&rdquo;</strong>
+          </p>
+
+          <div class="ph-grid" style="margin-top:var(--space-3)">
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80" alt="" /></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1473496165924-898a545e3c99?w=400&q=80" alt="" /></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&q=80" alt="" /></div>
+          </div>
+
+          <section style="margin-top:var(--space-8);padding:var(--space-5);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface)">
+            <h2 style="font-size:var(--text-h4);font-weight:500;margin:0 0 var(--space-2)">/settings</h2>
+            <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0 0 var(--space-4)">
+              Botão <strong>Regenerar todos os embeddings</strong> reprocessa fotos ativas (útil após migrar o acervo).
+            </p>
+            <button type="button" class="btn btn-outline">Regenerar todos os embeddings</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

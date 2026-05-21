@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pessoas e Tags · Prompt 10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+    <style>
+      .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8); }
+      .person-card { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-5); text-align: center; }
+      .ph-avatar { width: 72px; height: 72px; font-size: 22px; margin: 0 auto var(--space-3); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-full); }
+      .tags-cloud { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+      .tag-pill-lg { font-size: var(--text-body-lg); padding: 10px 20px; }
+      .tag-count { opacity: 0.75; font-weight: 400; }
+      .section-label { font-size: var(--text-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin: var(--space-6) 0 var(--space-3); }
+    </style>
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 10 — Pessoas e Tags</strong> ·
+      <a href="index.html">índice</a>
+    </div>
+    <div class="app-shell">
+      <aside class="ld-sidebar app-sidebar" style="min-height:100vh;padding:var(--space-4)">
+        <a class="ld-brand" href="index.html"><span class="mark">M</span> Memórias</a>
+        <a class="ld-item active-pessoas" href="#"><span class="dot-cat" style="background:var(--green)"></span>Pessoas</a>
+        <a class="ld-item active-tags" href="#"><span class="dot-cat" style="background:var(--red)"></span>Tags</a>
+      </aside>
+      <div class="app-main">
+        <div class="ld-topbar"><span class="ld-topbar-title">Pessoas</span></div>
+        <header class="cat-header pessoas">
+          <div class="cat-head-left">
+            <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div class="cat-text"><h1 class="cat-title">Pessoas</h1><p class="cat-sub">4 pessoas marcadas</p></div>
+          </div>
+        </header>
+        <div class="screen-body">
+          <p class="section-label">Lista /people</p>
+          <div class="people-grid">
+            <a class="person-card" href="#"><span class="avatar ph-avatar green">PC</span><p class="person-name">Pedrinho</p><p class="person-meta">208 fotos · Filho</p></a>
+            <a class="person-card" href="#"><span class="avatar ph-avatar green">VL</span><p class="person-name">Vovó Lúcia</p><p class="person-meta">76 fotos · Avó</p></a>
+          </div>
+          <p class="section-label">Lista /tags</p>
+          <div class="tags-cloud">
+            <a class="tag-pill tag-pill-lg y" href="#">família <span class="tag-count">· 188</span></a>
+            <a class="tag-pill tag-pill-lg b" href="#">casa <span class="tag-count">· 94</span></a>
+            <a class="tag-pill tag-pill-lg g" href="#">praia <span class="tag-count">· 58</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aprovação · Portal de Memórias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+    <style>
+      .hub { max-width: 960px; margin: 0 auto; padding: var(--space-7) var(--space-6); }
+      .hub h1 { font-weight: 500; font-size: 2rem; margin: 0 0 var(--space-3); }
+      .hub-lead { color: var(--text-secondary); margin: 0 0 var(--space-6); max-width: 70ch; }
+      .status-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        font-size: var(--text-small);
+        margin-bottom: var(--space-7);
+      }
+      .status-table th,
+      .status-table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      .status-table tr:last-child td { border-bottom: 0; }
+      .status-table th { background: var(--surface-low); font-weight: 600; }
+      .badge {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: var(--radius-full);
+        font-size: var(--text-caption);
+        font-weight: 600;
+      }
+      .badge-done { background: var(--green-soft); color: var(--green-strong); }
+      .badge-next { background: var(--blue-soft); color: var(--blue); }
+      .badge-wait { background: var(--surface-high); color: var(--text-tertiary); }
+      .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-4); }
+      .hub-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: var(--space-5);
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
+      .hub-card:hover { box-shadow: var(--shadow-2); }
+      .hub-card h3 { font-size: var(--text-h4); font-weight: 500; margin: 0 0 var(--space-2); }
+      .hub-card p { font-size: var(--text-small); color: var(--text-secondary); margin: 0 0 var(--space-3); }
+      .hub-card .path { font-family: "SF Mono", Menlo, monospace; font-size: 11px; color: var(--blue); }
+      h2.section-title { font-size: var(--text-h4); font-weight: 500; margin: var(--space-6) 0 var(--space-4); }
+    </style>
+  </head>
+  <body>
+    <div class="hub">
+      <h1>Portal de Memórias — aprovação visual</h1>
+      <p class="hub-lead">
+        Mockups HTML abertos sem servidor. Atualizados a cada etapa do
+        <code>docs/PROMPTS_CURSOR.md</code>. Fonte da verdade:
+        <a href="../design-system.html">design-system.html v0.2</a>.
+      </p>
+
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Etapa</th>
+            <th>Prompt</th>
+            <th>Status</th>
+            <th>Mockup</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Layout base</td>
+            <td>2</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="01-fotos-desktop.html">01-fotos-desktop</a></td>
+          </tr>
+          <tr>
+            <td>Migrations Supabase</td>
+            <td>3</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Autenticação</td>
+            <td>4</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="06-login.html">06-login</a></td>
+          </tr>
+          <tr>
+            <td>Upload de fotos</td>
+            <td>5</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="07-upload.html">07-upload</a></td>
+          </tr>
+          <tr>
+            <td>Foto individual + edição</td>
+            <td>6</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="08-foto-individual.html">08-foto-individual</a></td>
+          </tr>
+          <tr>
+            <td>Grid + Linha do tempo</td>
+            <td>7</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="09-fotos-views.html">09-fotos-views</a></td>
+          </tr>
+          <tr>
+            <td>Busca textual e filtros</td>
+            <td>8</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="10-busca-filtros.html">10-busca-filtros</a></td>
+          </tr>
+          <tr>
+            <td>Álbuns</td>
+            <td>9</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="11-albuns.html">11-albuns</a></td>
+          </tr>
+          <tr>
+            <td>Pessoas e Tags</td>
+            <td>10</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="12-pessoas-tags.html">12-pessoas-tags</a></td>
+          </tr>
+          <tr>
+            <td>Mapa + Lista</td>
+            <td>11</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="13-mapa-lista.html">13-mapa-lista</a></td>
+          </tr>
+          <tr>
+            <td>Busca semântica (IA)</td>
+            <td>12</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="14-busca-ia.html">14-busca-ia</a></td>
+          </tr>
+          <tr>
+            <td>Lixeira</td>
+            <td>13</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="15-lixeira.html">15-lixeira</a></td>
+          </tr>
+          <tr>
+            <td>Mobile + PWA + deploy</td>
+            <td>15</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="../ENCERRAMENTO-MVP.md">ENCERRAMENTO-MVP</a></td>
+          </tr>
+          <tr>
+            <td>Auditoria visual</td>
+            <td>14</td>
+            <td><span class="badge badge-done">Concluído</span></td>
+            <td><a href="16-auditoria-visual.html">16-auditoria</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-title">Mockups por etapa</h2>
+      <div class="card-grid">
+        <a class="hub-card" href="01-fotos-desktop.html">
+          <h3>01 · Layout shell</h3>
+          <p>Sidebar + ld-topbar + cat-header (Prompt 2)</p>
+          <span class="path">01-fotos-desktop.html</span>
+        </a>
+        <a class="hub-card" href="06-login.html">
+          <h3>06 · Login</h3>
+          <p>Tela centralizada, sem sidebar (Prompt 4)</p>
+          <span class="path">06-login.html</span>
+        </a>
+        <a class="hub-card" href="07-upload.html">
+          <h3>07 · Modal upload</h3>
+          <p>Dropzone + fila de progresso (Prompt 5)</p>
+          <span class="path">07-upload.html</span>
+        </a>
+        <a class="hub-card" href="08-foto-individual.html">
+          <h3>08 · Foto individual</h3>
+          <p>Split imagem + painel de metadados (Prompt 6)</p>
+          <span class="path">08-foto-individual.html</span>
+        </a>
+        <a class="hub-card" href="09-fotos-views.html">
+          <h3>09 · Grid e Linha do tempo</h3>
+          <p>Tabs com URL <code>?view=</code> (Prompt 7)</p>
+          <span class="path">09-fotos-views.html</span>
+        </a>
+        <a class="hub-card" href="12-pessoas-tags.html">
+          <h3>12 · Pessoas e Tags</h3>
+          <p>Grid de pessoas + nuvem de tags (Prompt 10)</p>
+          <span class="path">12-pessoas-tags.html</span>
+        </a>
+        <a class="hub-card" href="13-mapa-lista.html">
+          <h3>13 · Mapa e Lista</h3>
+          <p>MapLibre + lista densa com seleção (Prompt 11)</p>
+          <span class="path">13-mapa-lista.html</span>
+        </a>
+        <a class="hub-card" href="14-busca-ia.html">
+          <h3>14 · Busca por IA</h3>
+          <p>Chip IA + pgvector + /settings (Prompt 12)</p>
+          <span class="path">14-busca-ia.html</span>
+        </a>
+        <a class="hub-card" href="11-albuns.html">
+          <h3>11 · Álbuns (app)</h3>
+          <p>CRUD, fotos, drag-and-drop (Prompt 9)</p>
+          <span class="path">11-albuns.html</span>
+        </a>
+        <a class="hub-card" href="02-albuns-desktop.html">
+          <h3>02 · Álbuns (layout)</h3>
+          <p>Recorte §4.3</p>
+          <span class="path">02-albuns-desktop.html</span>
+        </a>
+        <a class="hub-card" href="10-busca-filtros.html">
+          <h3>10 · Busca + filtros</h3>
+          <p>FTS + painel lateral + URL params (Prompt 8)</p>
+          <span class="path">10-busca-filtros.html</span>
+        </a>
+        <a class="hub-card" href="03-busca-desktop.html">
+          <h3>03 · Busca (layout)</h3>
+          <p>Recorte inicial §2.4</p>
+          <span class="path">03-busca-desktop.html</span>
+        </a>
+        <a class="hub-card" href="04-mobile.html">
+          <h3>04 · Mobile</h3>
+          <p>Drawer 760px</p>
+          <span class="path">04-mobile.html</span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

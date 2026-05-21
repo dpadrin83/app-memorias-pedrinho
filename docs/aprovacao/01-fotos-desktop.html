@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fotos · Layout fiel ao DS v0.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Fiel ao design-system.html §3.1 + §4.1</strong> — sidebar + <code>ld-topbar</code> + <code>cat-header</code> ·
+      <a href="index.html">índice</a> ·
+      <a href="../design-system.html#screen-fotos">comparar no DS</a>
+    </div>
+
+    <div class="app-shell">
+      <!-- Sidebar 280px — padrão ld-item do DS -->
+      <aside class="ld-sidebar app-sidebar">
+        <div class="app-sidebar-scroll">
+          <a class="ld-brand" href="01-fotos-desktop.html">
+            <span class="mark">M</span>
+            Memórias
+          </a>
+          <a class="ld-item active" href="01-fotos-desktop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+            Fotos
+          </a>
+          <a class="ld-item" href="02-albuns-desktop.html">
+            <span class="dot-cat" style="background: var(--yellow)"></span>
+            Álbuns
+            <span class="nav-count">14</span>
+          </a>
+          <a class="ld-item" href="05-rotas.html#people">
+            <span class="dot-cat" style="background: var(--green)"></span>
+            Pessoas
+          </a>
+          <a class="ld-item" href="05-rotas.html#tags">
+            <span class="dot-cat" style="background: var(--red)"></span>
+            Tags
+          </a>
+          <a class="ld-item" href="05-rotas.html#favorites">
+            <span class="dot-cat" style="background: var(--purple)"></span>
+            Favoritos
+          </a>
+          <p class="nav-section-label">Álbuns recentes</p>
+          <a class="ld-item sub" href="#"><span class="dot-cat" style="background: var(--yellow)"></span>Aniversário do Pedrinho</a>
+          <a class="ld-item sub" href="#"><span class="dot-cat" style="background: var(--green)"></span>Verão na praia</a>
+          <a class="ld-item sub" href="#"><span class="dot-cat" style="background: var(--red)"></span>Natal 2025</a>
+          <div class="nav-divider"></div>
+          <a class="ld-item" href="03-busca-desktop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            Buscar
+          </a>
+          <a class="ld-item" href="05-rotas.html#trash">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+            Lixeira
+          </a>
+          <a class="ld-item" href="05-rotas.html#settings">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            Configurações
+          </a>
+        </div>
+        <div class="sidebar-footer">
+          <a class="sidebar-user" href="#">
+            <span class="avatar md blue">DP</span>
+            <div class="sidebar-user-meta">
+              <p class="sidebar-user-name">Danilo</p>
+              <p class="sidebar-user-email">danilo@exemplo.com</p>
+            </div>
+          </a>
+          <button type="button" class="btn-logout">Sair da conta</button>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <!-- Topbar branca — §3.1 Anatomia (antes do cat-header) -->
+        <div class="ld-topbar">
+          <span class="ld-topbar-title">Fotos</span>
+          <a class="icon-btn sm" href="03-busca-desktop.html" aria-label="Buscar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </a>
+        </div>
+
+        <div class="app-canvas">
+          <!-- Recorte idêntico a design-system.html#screen-fotos -->
+          <header class="cat-header fotos">
+            <div class="cat-head-left">
+              <div class="cat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+              </div>
+              <div class="cat-text">
+                <h1 class="cat-title">Fotos</h1>
+                <p class="cat-sub">312 itens · Todas as memórias</p>
+              </div>
+            </div>
+            <div class="cat-actions">
+              <button type="button" class="btn btn-outline btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><polyline points="8 6 12 2 16 6"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+                Ordenar
+              </button>
+              <button type="button" class="btn btn-primary btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Enviar
+              </button>
+            </div>
+          </header>
+
+          <div class="screen-body">
+            <nav class="tabs" aria-label="Modo de visualização">
+              <a class="tab active" href="#">Grid</a>
+              <a class="tab" href="#">Linha do tempo</a>
+              <a class="tab" href="#">Calendário</a>
+              <a class="tab" href="#">Mapa</a>
+              <a class="tab" href="#">Lista</a>
+            </nav>
+            <div class="filters-row">
+              <button type="button" class="chip active">Pedrinho</button>
+              <button type="button" class="chip">Este ano</button>
+              <button type="button" class="chip">Favoritas</button>
+              <button type="button" class="chip dashed">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Filtro
+              </button>
+            </div>
+
+            <div class="month-group">
+              <header class="month-head">
+                <h2 class="month-title">Março de 2026</h2>
+                <span class="month-sub">8 fotos · Casa da vovó</span>
+              </header>
+              <div class="ph-grid">
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80&auto=format&fit=crop&crop=faces" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              </div>
+            </div>
+
+            <div class="month-group">
+              <header class="month-head">
+                <h2 class="month-title">Fevereiro de 2026</h2>
+                <span class="month-sub">4 fotos</span>
+              </header>
+              <div class="ph-grid">
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1444930694458-01babf71870b?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1530043044085-ba48bd2d97e9?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

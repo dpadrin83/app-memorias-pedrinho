@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Busca · Layout fiel ao DS v0.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Componente §2.4</strong> — <code>.search-bar</code> + <code>.ia-chip</code> ·
+      <a href="index.html">índice</a> ·
+      <a href="../design-system.html#search">comparar no DS</a>
+    </div>
+    <div class="app-shell">
+      <aside class="ld-sidebar app-sidebar">
+        <div class="app-sidebar-scroll">
+          <a class="ld-brand" href="01-fotos-desktop.html"><span class="mark">M</span>Memórias</a>
+          <a class="ld-item" href="01-fotos-desktop.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Fotos</a>
+          <a class="ld-item" href="02-albuns-desktop.html"><span class="dot-cat" style="background:var(--yellow)"></span>Álbuns</a>
+          <div class="nav-divider"></div>
+          <a class="ld-item active" href="03-busca-desktop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            Buscar
+          </a>
+          <a class="ld-item" href="05-rotas.html#settings"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/></svg>Configurações</a>
+        </div>
+        <div class="sidebar-footer">
+          <a class="sidebar-user" href="#"><span class="avatar md blue">DP</span><div class="sidebar-user-meta"><p class="sidebar-user-name">Danilo</p><p class="sidebar-user-email">danilo@exemplo.com</p></div></a>
+        </div>
+      </aside>
+      <div class="app-main">
+        <div class="ld-topbar">
+          <span class="ld-topbar-title">Buscar</span>
+        </div>
+        <div class="app-canvas">
+          <div class="screen-body">
+            <div class="search-bar">
+              <svg class="lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input type="text" placeholder="Buscar em todas as fotos" value="fotos na praia do ano passado" />
+              <button type="button" class="ia-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+                IA
+              </button>
+            </div>
+            <p class="cat-sub" style="margin-bottom:var(--space-5)">Rota dedicada — sem <code>.cat-header</code> colorido nem abas de visualização.</p>
+            <div class="filters-row">
+              <button type="button" class="chip">Pedrinho</button>
+              <button type="button" class="chip">2025</button>
+              <button type="button" class="chip dashed">Período</button>
+            </div>
+            <div class="ph-grid">
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1485181244411-bd71b15ae04f?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80&auto=format&fit=crop" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

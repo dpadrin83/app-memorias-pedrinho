@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Auditoria visual · Prompt 14</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+    <style>
+      .audit { max-width: 900px; margin: 0 auto; padding: var(--space-7) var(--space-6); }
+      .audit table { width: 100%; border-collapse: collapse; font-size: var(--text-small); margin: var(--space-4) 0; }
+      .audit th, .audit td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+      .audit th { background: var(--surface-low); }
+      .ok { color: var(--green-strong); font-weight: 600; }
+      .warn { color: var(--yellow-strong); font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 14 — Auditoria visual</strong> ·
+      <a href="index.html">índice</a> ·
+      <a href="../ENCERRAMENTO-MVP.md">encerramento MVP</a>
+    </div>
+    <div class="audit">
+      <h1 style="font-weight:500">Auditoria vs design-system.html</h1>
+      <p style="color:var(--text-secondary)">Tokens, cat-header por categoria, tabs, modais e grid de fotos estão alinhados ao Material 3 do DS.</p>
+
+      <table>
+        <thead>
+          <tr><th>Tela</th><th>Aderente</th><th>Escapou</th><th>Correção</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/login</td>
+            <td class="ok">Sim</td>
+            <td>—</td>
+            <td>Card central, marca “M”, campos §2.5</td>
+          </tr>
+          <tr>
+            <td>/ (modos)</td>
+            <td class="ok">Sim</td>
+            <td>Calendário “Em breve”</td>
+            <td>Previsto no roadmap</td>
+          </tr>
+          <tr>
+            <td>/photo/[id]</td>
+            <td class="ok">Sim</td>
+            <td>—</td>
+            <td>Painel lateral, tags/pessoas pills</td>
+          </tr>
+          <tr>
+            <td>/albums</td>
+            <td class="ok">Sim</td>
+            <td>—</td>
+            <td>cat-header amarelo, cards álbum</td>
+          </tr>
+          <tr>
+            <td>/search</td>
+            <td class="ok">Sim</td>
+            <td>Chip IA desligado sem API</td>
+            <td>Comportamento intencional pós-MVP</td>
+          </tr>
+          <tr>
+            <td>/trash</td>
+            <td class="ok">Sim</td>
+            <td>Sem cat-header colorido</td>
+            <td>Utilitário como /search — aceitável</td>
+          </tr>
+          <tr>
+            <td>Sidebar</td>
+            <td class="ok">Sim</td>
+            <td class="warn">Mock removido</td>
+            <td>Álbuns recentes agora vêm do banco</td>
+          </tr>
+          <tr>
+            <td>/favorites</td>
+            <td class="warn">Parcial</td>
+            <td>Sem dados</td>
+            <td>Placeholder MVP documentado</td>
+          </tr>
+          <tr>
+            <td>Mobile 760px</td>
+            <td class="ok">Sim</td>
+            <td>Lixeira apertada</td>
+            <td>Ajustes CSS aplicados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

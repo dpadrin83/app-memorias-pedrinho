@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Busca + filtros · Prompt 8</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+    <style>
+      .search-layout { display: grid; grid-template-columns: 1fr 280px; gap: var(--space-6); }
+      .search-filters-panel {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius-md); padding: var(--space-5);
+      }
+      .search-filters-title { font-weight: 500; font-size: var(--text-h4); margin: 0 0 var(--space-4); }
+      .field { margin-bottom: var(--space-4); }
+      .field-label { font-size: var(--text-small); color: var(--text-secondary); display: block; margin-bottom: 6px; }
+      .field input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+      .ia-chip-disabled { opacity: 0.45; cursor: not-allowed; }
+      @media (max-width: 900px) { .search-layout { grid-template-columns: 1fr; } .search-filters-panel { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 8 — Busca textual</strong> · FTS Postgres · URL:
+      <code>?q=&amp;from=&amp;to=&amp;people=&amp;tags=&amp;view=</code> ·
+      <a href="index.html">índice</a>
+    </div>
+    <div class="app-shell">
+      <aside class="ld-sidebar app-sidebar" style="min-height:100vh">
+        <a class="ld-brand" href="index.html"><span class="mark">M</span> Memórias</a>
+        <a class="ld-item active" href="10-busca-filtros.html">Buscar</a>
+      </aside>
+      <div class="app-main">
+        <div class="ld-topbar"><span class="ld-topbar-title">Buscar</span></div>
+        <div class="screen-body">
+          <div class="search-bar">
+            <svg class="lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" value="praia pedrinho" placeholder="Buscar em todas as fotos" />
+            <button type="button" class="ia-chip ia-chip-disabled" disabled>✦ IA</button>
+          </div>
+          <div class="search-layout">
+            <div>
+              <nav class="tabs">
+                <a class="tab active" href="#">Grid</a>
+                <a class="tab" href="#">Linha do tempo</a>
+              </nav>
+              <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0 0 var(--space-4)">4 resultados para &ldquo;praia pedrinho&rdquo;</p>
+              <div class="ph-grid">
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=400&q=80" alt="" /></div>
+                <div class="photo-card"><img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=400&q=80" alt="" /></div>
+              </div>
+            </div>
+            <aside class="search-filters-panel">
+              <h2 class="search-filters-title">Filtros</h2>
+              <div class="field">
+                <label class="field-label">Período — de</label>
+                <input type="date" value="2025-01-01" />
+              </div>
+              <div class="field">
+                <label class="field-label">Período — até</label>
+                <input type="date" value="2026-12-31" />
+              </div>
+              <p class="field-label" style="margin-top:var(--space-4)">Pessoas</p>
+              <div class="filters-row">
+                <button type="button" class="chip active">Pedrinho</button>
+                <button type="button" class="chip">Vovó Lúcia</button>
+              </div>
+              <p class="field-label" style="margin-top:var(--space-4)">Tags</p>
+              <div class="filters-row">
+                <button type="button" class="chip active">praia</button>
+                <button type="button" class="chip">família</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

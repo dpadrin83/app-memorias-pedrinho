@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fotos · Grid e Linha do tempo · Prompt 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 7 — Modos de visualização</strong> ·
+      <code>/?view=grid</code> (default) · <code>/?view=timeline</code> ·
+      <code>?loaded=120</code> para paginação ·
+      <a href="index.html">índice</a>
+    </div>
+
+    <div class="app-shell">
+      <aside class="ld-sidebar app-sidebar" style="min-height:100vh">
+        <a class="ld-brand" href="index.html"><span class="mark">M</span> Memórias</a>
+        <a class="ld-item active" href="09-fotos-views.html">Fotos</a>
+      </aside>
+      <div class="app-main">
+        <div class="ld-topbar"><span class="ld-topbar-title">Fotos</span></div>
+        <header class="cat-header fotos">
+          <div class="cat-head-left">
+            <div class="cat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+            <div class="cat-text">
+              <h1 class="cat-title">Fotos</h1>
+              <p class="cat-sub">24 itens · Todas as memórias</p>
+            </div>
+          </div>
+          <div class="cat-actions">
+            <button type="button" class="btn btn-primary btn-sm">Enviar</button>
+          </div>
+        </header>
+        <div class="screen-body">
+          <p class="view-switch-hint">
+            Alterne as abas abaixo. No app: <strong>Grid</strong> = <code>/</code> ·
+            <strong>Linha do tempo</strong> = <code>/?view=timeline</code>
+          </p>
+          <nav class="tabs">
+            <a class="tab" href="09-fotos-views.html">Grid</a>
+            <a class="tab active" href="09-fotos-views.html#timeline">Linha do tempo</a>
+            <span class="tab-disabled">Calendário</span>
+            <span class="tab-disabled">Mapa</span>
+            <span class="tab-disabled">Lista</span>
+          </nav>
+
+          <div id="timeline" class="month-group">
+            <header class="month-head">
+              <h2 class="month-title">Março de 2026</h2>
+              <span class="month-sub">8 fotos</span>
+            </header>
+            <div class="ph-grid">
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=400&q=80" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=400&q=80" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=400&q=80" alt="" /></div>
+            </div>
+          </div>
+          <div class="month-group">
+            <header class="month-head">
+              <h2 class="month-title">Fevereiro de 2026</h2>
+              <span class="month-sub">4 fotos</span>
+            </header>
+            <div class="ph-grid">
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1444930694458-01babf71870b?w=400&q=80" alt="" /></div>
+              <div class="photo-card"><img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&q=80" alt="" /></div>
+            </div>
+          </div>
+          <p style="text-align:center;margin-top:var(--space-6)">
+            <button type="button" class="btn btn-outline">Carregar mais fotos</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

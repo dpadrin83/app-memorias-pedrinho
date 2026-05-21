@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mapa de rotas — Portal de Memórias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_layout.css" />
+    <style>
+      .routes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-4);
+      }
+      .route-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: var(--space-5);
+      }
+      .route-card h3 {
+        font-size: var(--text-h4);
+        font-weight: 500;
+        margin: 0 0 var(--space-2);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .route-card .path {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 12px;
+        color: var(--blue);
+        margin-bottom: var(--space-3);
+      }
+      .route-card .cat-pill {
+        display: inline-block;
+        font-size: var(--text-caption);
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        margin-bottom: var(--space-3);
+      }
+      .pill-blue { background: var(--blue-soft); color: var(--blue-strong); }
+      .pill-yellow { background: var(--yellow-soft); color: var(--yellow-strong); }
+      .pill-green { background: var(--green-soft); color: var(--green-strong); }
+      .pill-red { background: var(--red-soft); color: var(--red-strong); }
+      .pill-purple { background: var(--purple-soft); color: var(--purple-strong); }
+      .pill-neutral { background: var(--surface-low); color: var(--text-secondary); }
+    </style>
+  </head>
+  <body>
+    <div class="approval-banner">
+      <a href="index.html" style="color: var(--blue)">← Índice de aprovação</a>
+    </div>
+    <div style="max-width:960px;margin:0 auto;padding:var(--space-7) var(--space-6)">
+      <h1 style="font-weight:500;font-size:1.75rem;margin:0 0 var(--space-3)">Rotas placeholder (MVP)</h1>
+      <p style="color:var(--text-secondary);margin:0 0 var(--space-7)">Cada rota usará o mesmo layout shell; só mudam cat-header, abas e conteúdo.</p>
+      <div class="routes-grid">
+        <article class="route-card" id="fotos">
+          <span class="cat-pill pill-blue">Fotos</span>
+          <p class="path">/</p>
+          <h3>Fotos</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Abas: Grid, Linha do tempo, Calendário, Mapa, Lista. Ação: Enviar fotos.</p>
+          <p style="margin-top:var(--space-3)"><a href="01-fotos-desktop.html" style="color:var(--blue);font-size:var(--text-small)">Ver mockup →</a></p>
+        </article>
+        <article class="route-card" id="albums">
+          <span class="cat-pill pill-yellow">Álbuns</span>
+          <p class="path">/albums</p>
+          <h3>Álbuns</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Lista de álbuns. Ação: Criar álbum. Dentro do álbum: mesmas abas que Fotos.</p>
+          <p style="margin-top:var(--space-3)"><a href="02-albuns-desktop.html" style="color:var(--blue);font-size:var(--text-small)">Ver mockup →</a></p>
+        </article>
+        <article class="route-card" id="people">
+          <span class="cat-pill pill-green">Pessoas</span>
+          <p class="path">/people</p>
+          <h3>Pessoas</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Grid de cartões de pessoa. Sem abas de visualização.</p>
+        </article>
+        <article class="route-card" id="tags">
+          <span class="cat-pill pill-red">Tags</span>
+          <p class="path">/tags</p>
+          <h3>Tags</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Nuvem / lista de tag pills coloridas.</p>
+        </article>
+        <article class="route-card" id="favorites">
+          <span class="cat-pill pill-purple">Favoritos</span>
+          <p class="path">/favorites</p>
+          <h3>Favoritos</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Galeria só com fotos favoritadas. Abas iguais a Fotos.</p>
+        </article>
+        <article class="route-card">
+          <span class="cat-pill pill-neutral">Busca</span>
+          <p class="path">/search</p>
+          <h3>Buscar</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Search pill + chip IA. Filtros de período e pessoa.</p>
+          <p style="margin-top:var(--space-3)"><a href="03-busca-desktop.html" style="color:var(--blue);font-size:var(--text-small)">Ver mockup →</a></p>
+        </article>
+        <article class="route-card" id="trash">
+          <span class="cat-pill pill-neutral">Lixeira</span>
+          <p class="path">/trash</p>
+          <h3>Lixeira</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Lista de itens soft-deleted. Restaurar ou apagar definitivo.</p>
+        </article>
+        <article class="route-card" id="settings">
+          <span class="cat-pill pill-neutral">Config</span>
+          <p class="path">/settings</p>
+          <h3>Configurações</h3>
+          <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0">Preferências, emails autorizados (admin). Header neutro.</p>
+        </article>
+      </div>
+      <p style="margin-top:var(--space-7);font-size:var(--text-small);color:var(--text-tertiary)">Fora deste layout: <code>/login</code> (tela centralizada, sem sidebar).</p>
+    </div>
+  </body>
+</html>

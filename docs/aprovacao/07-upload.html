@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Upload · Prompt 5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="_ds.css" />
+  </head>
+  <body>
+    <div class="approval-banner">
+      <strong>Prompt 5 — Upload</strong> · modal com dropzone + progresso por arquivo ·
+      <a href="index.html">índice</a>
+    </div>
+    <div class="modal-demo">
+      <h2 style="font-weight:500;font-size:var(--text-h3);margin:0 0 var(--space-1)">Enviar fotos</h2>
+      <p style="font-size:var(--text-small);color:var(--text-secondary);margin:0 0 var(--space-4)">JPG, PNG, HEIC ou WebP</p>
+      <div class="dropzone">
+        <p style="font-weight:500;margin:0">Arraste fotos ou clique para escolher</p>
+        <p style="font-size:var(--text-small);color:var(--text-tertiary);margin:8px 0 0">Até 50 MB por arquivo</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:var(--text-small);margin-bottom:var(--space-4)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span>IMG_2841.jpg</span><span style="color:var(--green-strong)">Concluído</span>
+        </div>
+        <div style="height:4px;background:var(--surface-high);border-radius:99px;overflow:hidden">
+          <div style="width:100%;height:100%;background:var(--blue)"></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:var(--space-3)">
+        <button type="button" class="btn btn-outline">Cancelar</button>
+        <button type="button" class="btn btn-primary">Escolher arquivos</button>
+      </div>
+    </div>
+  </body>
+</html>
