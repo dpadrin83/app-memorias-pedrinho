@@ -42,10 +42,11 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+    const projectRef =
+      url.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1] ?? "desconhecido";
     return NextResponse.json(
       {
-        error:
-          "Este email não está em allowed_emails neste projeto Supabase. Confira o SQL no dashboard do mesmo projeto da Vercel.",
+        error: `Este email não está em allowed_emails no projeto Supabase "${projectRef}". Abra /api/auth/health?email=${encodeURIComponent(email)} no site e confira se o projectRef é o mesmo do dashboard onde você rodou o SQL.`,
       },
       { status: 403 },
     );
