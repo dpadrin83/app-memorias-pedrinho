@@ -92,6 +92,18 @@ Ative as extensões `pg_cron` e `pg_net` no projeto se usar o SQL acima.
 3. `npm run build` deve passar localmente antes do deploy.
 4. Domínio customizado: Vercel → Settings → Domains.
 
+### Supabase → Authentication → URL Configuration (obrigatório)
+
+| Campo | Valor |
+|--------|--------|
+| **Site URL** | `https://app-memorias-pedrinho.vercel.app` |
+| **Redirect URLs** | `https://app-memorias-pedrinho.vercel.app/**` |
+| | `http://localhost:3000/**` (só para dev local) |
+
+Clique em **Save changes**. Com Site URL em `localhost`, o login em produção falha ou redireciona errado.
+
+**URL do app em produção:** https://app-memorias-pedrinho.vercel.app/login
+
 Erro `is_allowed_user() does not exist`? Rode `supabase/FIX_is_allowed_user.sql` e depois repita a migration que falhou.
 
 **Verificar se tudo foi aplicado:** cole e execute `supabase/CHECK_migrations.sql` no SQL Editor (todas as linhas devem ficar `OK`).

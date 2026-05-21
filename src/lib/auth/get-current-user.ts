@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { checkEmailAllowed } from "@/lib/auth/is-email-allowed";
 import { isPublicSupabaseEnvConfigured } from "@/lib/supabase/env";
 import type { CurrentUser } from "./types";
 
@@ -44,18 +45,8 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
 
     const email = user.email.toLowerCase();
 
-    const { data: allowed, error: allowedError } = await supabase
-      .from("allowed_emails")
-      .select("id")
-      .eq("email", email)
-      .maybeSingle();
-
-    if (allowedError) {
-      console.error("[auth] allowed_emails:", allowedError.message);
-      return null;
-    }
-
-    if (!allowed) return null;
+    const allowedCheck = await checkEmailAllowed(email);
+    if (!allowedCheck.allowed) return null;
 
     const { data: profile } = await supabase
       .from("profiles")
