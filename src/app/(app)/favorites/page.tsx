@@ -1,7 +1,7 @@
 import { CatHeader } from "@/components/layout/cat-header";
 import { EmptyPlaceholder } from "@/components/layout/empty-placeholder";
 import { ViewTabs } from "@/components/layout/view-tabs";
-import { categoryIcons } from "@/components/layout/sidebar";
+import { categoryIcons } from "@/components/layout/category-icons";
 import { Star } from "lucide-react";
 
 export default function FavoritesPage() {

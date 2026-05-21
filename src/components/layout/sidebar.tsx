@@ -128,11 +128,4 @@ export function Sidebar({ open, user, recentAlbums, onNavigate }: SidebarProps) 
   );
 }
 
-/** Ícones de categoria para cat-header (exportados para páginas) */
-export const categoryIcons = {
-  fotos: <ImageIcon width={22} height={22} strokeWidth={1.75} />,
-  albuns: <BookOpen width={22} height={22} strokeWidth={1.75} />,
-  pessoas: <Users width={22} height={22} strokeWidth={1.75} />,
-  tags: <Tag width={22} height={22} strokeWidth={1.75} />,
-  favoritos: <Star width={22} height={22} strokeWidth={1.75} />,
-};
+export { categoryIcons } from "./category-icons";

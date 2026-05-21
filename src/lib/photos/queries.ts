@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { tryCreateClient } from "@/lib/supabase/server";
 import {
   mapPhotoRowsToDisplay,
   PHOTO_DISPLAY_SELECT,
@@ -9,7 +9,8 @@ import { getSignedThumbnailUrl } from "./urls";
 export type { PhotoDisplayItem, PhotoGalleryItem } from "./types";
 
 export async function getActivePhotosCount(): Promise<number> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return 0;
   const { count, error } = await supabase
     .from("photos")
     .select("id", { count: "exact", head: true })
@@ -22,18 +23,30 @@ export async function getActivePhotosCount(): Promise<number> {
 export async function getActivePhotosForGallery(
   limit = 60,
 ): Promise<PhotoDisplayItem[]> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("photos")
     .select(PHOTO_DISPLAY_SELECT)
     .is("deleted_at", null)
-    .order("event_date", { ascending: false, nullsFirst: false })
+    .order("event_date", { ascending: false })
     .order("uploaded_at", { ascending: false })
     .limit(limit);
 
-  if (error || !data?.length) return [];
+  if (error) {
+    console.error("[photos] gallery:", error.message);
+    return [];
+  }
 
-  return mapPhotoRowsToDisplay(data, getSignedThumbnailUrl);
+  if (!data?.length) return [];
+
+  try {
+    return await mapPhotoRowsToDisplay(data, getSignedThumbnailUrl);
+  } catch (err) {
+    console.error("[photos] mapPhotoRowsToDisplay:", err);
+    return [];
+  }
 }
 
 /** @deprecated Use getActivePhotosForGallery */

@@ -15,7 +15,12 @@ export default async function AppLayout({
     redirect("/login");
   }
 
-  const user = await getCurrentUser();
+  let user: Awaited<ReturnType<typeof getCurrentUser>> = null;
+  try {
+    user = await getCurrentUser();
+  } catch (error) {
+    console.error("[layout] getCurrentUser:", error);
+  }
 
   if (!user) {
     redirect("/login");

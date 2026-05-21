@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { tryCreateClient } from "@/lib/supabase/server";
 import { albumColorForId } from "./colors";
 import {
   flattenJoinPhotos,
@@ -32,7 +32,8 @@ async function resolveCoverUrl(
   coverPhotoId: string | null,
   albumId: string,
 ): Promise<string | null> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return null;
 
   if (coverPhotoId) {
     const { data } = await supabase
@@ -70,7 +71,8 @@ export type SidebarAlbumLink = {
 export async function getRecentAlbumsForSidebar(
   limit = 3,
 ): Promise<SidebarAlbumLink[]> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("albums")
     .select("id, title")
@@ -88,7 +90,8 @@ export async function getRecentAlbumsForSidebar(
 }
 
 export async function getActiveAlbums(): Promise<AlbumListItem[]> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("albums")
     .select(
@@ -127,7 +130,8 @@ export async function getActiveAlbums(): Promise<AlbumListItem[]> {
 }
 
 export async function getAlbumById(id: string): Promise<AlbumDetail | null> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return null;
   const { data, error } = await supabase
     .from("albums")
     .select("id, title, description, cover_photo_id")
@@ -150,7 +154,8 @@ export async function getAlbumPhotos(
   albumId: string,
   limit = 500,
 ): Promise<PhotoDisplayItem[]> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("album_photos")
     .select(`position, photos!inner(${PHOTO_INNER_SELECT})`)
@@ -176,7 +181,8 @@ export type PickablePhoto = {
 export async function getPhotosAvailableForAlbum(
   albumId: string,
 ): Promise<PickablePhoto[]> {
-  const supabase = await createClient();
+  const supabase = await tryCreateClient();
+  if (!supabase) return [];
 
   const { data: inAlbum } = await supabase
     .from("album_photos")

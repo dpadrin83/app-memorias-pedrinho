@@ -1,6 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { getPublicSupabaseEnv } from "./env";
+import { getPublicSupabaseEnv, isPublicSupabaseEnvConfigured } from "./env";
+
+/** Cliente Supabase ou null — não lança (uso em páginas/queries). */
+export async function tryCreateClient() {
+  try {
+    if (!isPublicSupabaseEnvConfigured()) return null;
+    return await createClient();
+  } catch (error) {
+    console.error("[supabase] tryCreateClient:", error);
+    return null;
+  }
+}
 
 export async function createClient() {
   const { url, anonKey } = getPublicSupabaseEnv();

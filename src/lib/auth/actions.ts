@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -30,8 +31,10 @@ export async function signIn(
   }
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const user = session?.user;
 
   if (!user?.email) {
     await supabase.auth.signOut();
@@ -51,6 +54,7 @@ export async function signIn(
     };
   }
 
+  revalidatePath("/", "layout");
   redirect("/");
 }
 
