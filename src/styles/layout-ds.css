@@ -1,3 +1,17 @@
+/**
+ * Portal de Memórias — layout DS v0.2
+ * Espelho de docs/aprovacao/_ds.css + extensões do app.
+ */
+
+/* --- Reset DS (docs/aprovacao/_ds.css) — evita herança quebrada do Tailwind --- */
+.app-shell a {
+  color: inherit;
+  text-decoration: none;
+}
+.app-shell a:hover {
+  text-decoration: none;
+}
+
 /* --- App shell (§3.1 Padrões + direção criativa 280px) --- */
 .app-shell {
   display: flex;
@@ -290,13 +304,22 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   height: 40px;
   padding: 0 var(--space-6);
+  border: none;
   border-radius: var(--radius-full);
   font-weight: 500;
   font-size: var(--text-body);
-  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 .btn-primary {
   background: var(--blue);
@@ -320,6 +343,10 @@
   padding: 0 var(--space-4);
   font-size: var(--text-small);
 }
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
 .btn-danger {
   background: var(--red);
   color: #fff;
@@ -330,12 +357,15 @@
 .icon-btn {
   width: 40px;
   height: 40px;
+  border: none;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--dur-fast) var(--ease-out);
 }
 .icon-btn:hover {
   background: var(--surface-low);
@@ -357,6 +387,8 @@
   color: var(--text-primary);
   font-size: var(--text-small);
   font-weight: 500;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
 }
 .chip:hover {
   background: var(--surface-low);
@@ -480,6 +512,9 @@ button.ia-chip {
 }
 .settings-panel-status-error {
   color: var(--red);
+}
+.settings-panel-status-muted {
+  color: var(--text-secondary);
 }
 
 /* Lixeira */
@@ -797,6 +832,8 @@ a.tab {
   }
 }
 .photo-card-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .month-group {
@@ -849,8 +886,17 @@ a.tab {
   background: var(--surface-high);
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  transition:
+    transform var(--dur-normal) var(--ease-out),
+    box-shadow var(--dur-normal) var(--ease-out);
 }
-.photo-card img {
+.photo-card:hover {
+  transform: scale(1.005);
+  box-shadow: var(--shadow-2);
+}
+.photo-card img,
+.photo-card .photo-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -863,9 +909,13 @@ a.tab {
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  transition: all var(--dur-normal) var(--ease-out);
 }
 .album-card:hover {
-  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3);
+  border-color: transparent;
 }
 .album-cover {
   position: relative;
@@ -1186,6 +1236,23 @@ a.tag-pill:hover {
 .drawer-backdrop.open {
   display: block;
 }
+@media (min-width: 761px) {
+  .app-sidebar {
+    position: static;
+    transform: none;
+    box-shadow: none;
+  }
+  .drawer-backdrop {
+    display: none !important;
+  }
+  .ld-topbar-mobile {
+    display: none !important;
+  }
+  .ld-topbar {
+    display: flex;
+  }
+}
+
 @media (max-width: 760px) {
   .ld-topbar {
     display: none;
@@ -1335,6 +1402,12 @@ a.tag-pill:hover {
   width: 100%;
   justify-content: center;
   margin-top: var(--space-2);
+}
+.login-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 /* --- Modal / upload --- */
@@ -1547,6 +1620,9 @@ a.tag-pill:hover {
 .ps-date-muted {
   color: var(--text-tertiary);
 }
+.ps-date-field {
+  margin-top: var(--space-3);
+}
 .ps-block {
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
@@ -1716,6 +1792,46 @@ a.tag-pill:hover {
 }
 .ps-actions {
   margin-top: auto;
+}
+.ps-panel-top-end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+.fav-toggle {
+  color: var(--text-tertiary);
+}
+.fav-toggle:hover {
+  color: var(--purple-strong);
+  background: var(--purple-soft);
+}
+.fav-toggle.is-on {
+  color: var(--purple);
+  background: var(--purple-soft);
+}
+.fav-toggle.is-on:hover {
+  color: var(--purple-strong);
+}
+.fav-toggle:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+/* Star badge on photo card */
+.photo-card-fav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--purple);
+  box-shadow: var(--shadow-1, 0 1px 3px rgba(0, 0, 0, 0.16));
+  pointer-events: none;
 }
 
 /* Map view */
@@ -1938,5 +2054,142 @@ a.tag-pill:hover {
   .photo-list-batch {
     left: var(--space-3);
     right: var(--space-3);
+  }
+}
+
+/* Calendar view */
+.photo-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.photo-calendar .cal {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.photo-calendar .cal-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-low);
+  border-bottom: 1px solid var(--border-strong);
+}
+.photo-calendar .cal-title {
+  font-weight: 500;
+  font-size: var(--text-h4);
+  margin: 0;
+}
+.photo-calendar .cal-meta {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+.photo-calendar .cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--surface);
+}
+.photo-calendar .cal-weekdays .wd {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: var(--space-3) 0;
+}
+.photo-calendar .cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.photo-calendar .day {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-height: 64px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--text-primary);
+  overflow: hidden;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.photo-calendar .day:nth-child(7n) {
+  border-right: 0;
+}
+.photo-calendar .day-empty {
+  background: var(--surface-low);
+}
+.photo-calendar .day-quiet {
+  color: var(--text-tertiary);
+}
+.photo-calendar .day-has:hover {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+.photo-calendar .day-thumb {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.photo-calendar .day-has::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  z-index: 0;
+}
+.photo-calendar .day-num {
+  position: relative;
+  z-index: 1;
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-primary);
+}
+.photo-calendar .day-has .day-num {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.photo-calendar .day-count {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+}
+.photo-calendar .cal-undated-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 4px;
+  padding: var(--space-3);
+}
+.photo-calendar .day-undated {
+  aspect-ratio: 1 / 1;
+  border: 0;
+  min-height: 0;
+}
+@media (max-width: 600px) {
+  .photo-calendar .day {
+    min-height: 48px;
+    padding: 4px 6px;
+  }
+  .photo-calendar .day-num {
+    font-size: 11px;
   }
 }

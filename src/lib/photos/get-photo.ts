@@ -11,6 +11,7 @@ export type PhotoDetail = {
   eventDateLabel: string | null;
   lat: number | null;
   lng: number | null;
+  isFavorite: boolean;
 };
 
 export async function getPhotoById(id: string): Promise<PhotoDetail | null> {
@@ -19,7 +20,7 @@ export async function getPhotoById(id: string): Promise<PhotoDetail | null> {
   const { data: photo, error } = await supabase
     .from("photos")
     .select(
-      "id, storage_path, title, description, event_date, location, lat, lng",
+      "id, storage_path, title, description, event_date, location, lat, lng, is_favorite",
     )
     .eq("id", id)
     .is("deleted_at", null)
@@ -80,5 +81,6 @@ export async function getPhotoById(id: string): Promise<PhotoDetail | null> {
     eventDateLabel: formatEventDateLabel(photo.event_date),
     lat: photo.lat,
     lng: photo.lng,
+    isFavorite: photo.is_favorite === true,
   };
 }

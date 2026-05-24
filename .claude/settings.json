@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /tmp/login-post.json -w \"HTTP %{http_code}\\\\n\" -X POST http://localhost:4173/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"dpadrin83@gmail.com\",\"password\":\"definitivamente-errada-1234\"}')",
+      "Bash(curl -s -o /tmp/login-unauth.json -w \"HTTP %{http_code}\\\\n\" -X POST http://localhost:4173/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"naoautorizado@example.com\",\"password\":\"qualquer\"}')",
+      "Bash(curl -s \"http://localhost:4173/api/auth/health?email=dpadrin83@gmail.com\")",
+      "Bash(ls -la \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" 2>/dev/null && echo \"chrome ok\" || echo \"no chrome\")",
+      "Read(//Applications/Google Chrome.app/Contents/MacOS/**)",
+      "Bash(curl -s -o /dev/null -w \"warm-up HTTP %{http_code}\\\\n\" http://localhost:4173/login)",
+      "Bash(\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --hide-scrollbars --disable-gpu --force-device-scale-factor=2 --window-size=1440,900 --screenshot=/tmp/login-desktop.png http://localhost:4173/login)",
+      "Bash(curl -s \"http://localhost:4173/_next/static/chunks/%5Broot-of-the-server%5D__0dmtrq6._.css\")",
+      "Bash(\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --hide-scrollbars --disable-gpu --force-device-scale-factor=2 --window-size=1440,900 --virtual-time-budget=5000 --screenshot=/tmp/login-desktop2.png http://localhost:4173/login)",
+      "Bash(cp /tmp/screenshot.mjs ./tmp-screenshot.mjs)",
+      "Bash(node ./tmp-screenshot.mjs)",
+      "Bash(cp /tmp/inspect.mjs ./tmp-inspect.mjs)",
+      "Bash(node ./tmp-inspect.mjs)",
+      "Bash(rm -f ./tmp-inspect.mjs)",
+      "Bash(curl -s \"http://localhost:4173/_next/static/chunks/%5Broot-of-the-server%5D__0dmtrq6._.css\" > /tmp/styles3.css 2>/dev/null; echo \"size=$\\(wc -c < /tmp/styles3.css\\)\" && echo \"=== definições de --font-sans no bundle ===\" && grep -n \"font-sans\" /tmp/styles3.css | head -20 && echo \"\" && echo \"=== definições de --font-roboto-flex ===\" && grep -n \"font-roboto\" /tmp/styles3.css | head -10 && echo \"\" && echo \"=== o que @theme inline ainda tem ===\" && grep -n \"font-heading\\\\|--font-sans:\" /tmp/styles3.css | head -10)",
+      "Bash(echo \"restarted pid=$!\")",
+      "Bash(curl -s -o /dev/null -w \"warm-up: %{http_code}\\\\n\" http://localhost:4173/login)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

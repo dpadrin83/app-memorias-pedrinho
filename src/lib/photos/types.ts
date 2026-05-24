@@ -8,6 +8,7 @@ export type PhotoDisplayItem = {
   lng: number | null;
   people: string[];
   tags: string[];
+  isFavorite: boolean;
 };
 
 /** @deprecated Use PhotoDisplayItem */

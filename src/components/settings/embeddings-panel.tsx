@@ -51,7 +51,7 @@ export function EmbeddingsPanel({ enabled }: EmbeddingsPanelProps) {
         </div>
       </div>
       {!enabled ? (
-        <p className="settings-panel-status" style={{ color: "var(--text-secondary)" }}>
+        <p className="settings-panel-status settings-panel-status-muted">
           Busca por IA desativada — adicione <code>OPENAI_API_KEY</code> no{" "}
           <code>.env.local</code> quando quiser usar.
         </p>

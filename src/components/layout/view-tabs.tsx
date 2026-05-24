@@ -4,13 +4,14 @@ import type { PhotoView } from "@/lib/photos/views";
 
 type ViewTabsProps = {
   activeView: PhotoView;
+  basePath?: string;
 };
 
-export function ViewTabs({ activeView }: ViewTabsProps) {
+export function ViewTabs({ activeView, basePath = "/" }: ViewTabsProps) {
   return (
     <GalleryViewTabs
       activeView={activeView}
-      buildHref={(view) => buildGalleryHref("/", view)}
+      buildHref={(view) => buildGalleryHref(basePath, view)}
     />
   );
 }

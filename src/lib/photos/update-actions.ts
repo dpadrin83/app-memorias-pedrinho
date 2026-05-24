@@ -195,6 +195,28 @@ export async function searchTags(query: string) {
   return data ?? [];
 }
 
+export async function setPhotoFavorite(
+  photoId: string,
+  isFavorite: boolean,
+): Promise<ActionResult> {
+  const user = await getCurrentUser();
+  if (!user) return { ok: false, error: "Sessão inválida." };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("photos")
+    .update({ is_favorite: isFavorite })
+    .eq("id", photoId)
+    .is("deleted_at", null);
+
+  if (error) return { ok: false, error: error.message };
+
+  revalidatePath("/");
+  revalidatePath("/favorites");
+  revalidatePath(`/photo/${photoId}`);
+  return { ok: true };
+}
+
 export async function softDeletePhoto(photoId: string): Promise<ActionResult> {
   const user = await getCurrentUser();
   if (!user) return { ok: false, error: "Sessão inválida." };

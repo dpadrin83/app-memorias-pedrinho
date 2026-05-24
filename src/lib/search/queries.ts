@@ -72,6 +72,7 @@ export async function searchPhotosSemantic(
       lng: null,
       people: [],
       tags: [],
+      isFavorite: false,
     });
   }
 
@@ -116,6 +117,7 @@ export async function searchPhotos(
       lng: row.lng ?? null,
       people: [],
       tags: [],
+      isFavorite: false,
     });
   }
 

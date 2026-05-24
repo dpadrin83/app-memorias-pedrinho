@@ -132,6 +132,7 @@ export function getTopbarBackHref(pathname: string): string | null {
   return null;
 }
 
-export function showAppTopbar(pathname: string): boolean {
-  return pathname !== "/search";
+/** DS §3.1 — ld-topbar branca em todas as rotas do app-shell (inclui /search). */
+export function showAppTopbar(_pathname: string): boolean {
+  return true;
 }

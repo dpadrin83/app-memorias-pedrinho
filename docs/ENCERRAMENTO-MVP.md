@@ -25,8 +25,8 @@
 | Pessoas + Tags | ✅ |
 | Lixeira + purge 30 dias (edge function) | ✅ |
 | Busca semântica (IA) | ⏸ Código pronto; ativar com `OPENAI_API_KEY` |
-| Favoritos | Placeholder MVP |
-| Calendário | Em breve |
+| Favoritos | ✅ Toggle estrela + tela `/favorites` com mesmas views |
+| Calendário | ✅ Grade mensal com thumbnails por dia |
 | Deploy Vercel | Documentado no README |
 
 ---
@@ -52,6 +52,10 @@ Correções já aplicadas nesta etapa:
 
 Pendente de produto (não bloqueia MVP):
 
-- Favoritos (tela vazia conforme escopo)
-- Calendário nos ViewTabs
-- Ícones PWA PNG 192/512 (hoje SVG no manifest)
+- (nenhum)
+
+Encerrado nesta etapa:
+
+- Favoritos: coluna `is_favorite` em `photos` (migration `20260521120000_photo_favorites.sql`), server action `setPhotoFavorite`, toggle estrela no editor, badge no card, tela `/favorites` real.
+- Calendário: novo modo nos ViewTabs com grade mensal (uma seção por mês) e cells clicáveis com thumbnail.
+- PWA: ícones PNG 192/512 (any + maskable) e apple-touch-icon 180 gerados a partir do SVG, manifesto e metadata atualizados.

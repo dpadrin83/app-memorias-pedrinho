@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Star } from "lucide-react";
 import type { PhotoGalleryItem } from "@/lib/photos/queries";
 
 type PhotoCardProps = {
@@ -19,6 +20,11 @@ export function PhotoCard({ photo, priority = false }: PhotoCardProps) {
         loading={priority ? "eager" : "lazy"}
         priority={priority}
       />
+      {photo.isFavorite ? (
+        <span className="photo-card-fav" aria-label="Favorito">
+          <Star size={14} strokeWidth={1.75} fill="currentColor" />
+        </span>
+      ) : null}
     </Link>
   );
 }

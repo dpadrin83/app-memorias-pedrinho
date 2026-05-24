@@ -11,6 +11,7 @@ type PhotoRowInput = {
   location?: string | null;
   lat?: number | null;
   lng?: number | null;
+  is_favorite?: boolean | null;
   photo_people?: { people: PersonRef }[] | null;
   photo_tags?: { tags: TagRef }[] | null;
 };
@@ -51,6 +52,7 @@ export async function mapPhotoRowsToDisplay(
       lng: row.lng ?? null,
       people: extractNames(row.photo_people ?? undefined, "people"),
       tags: extractNames(row.photo_tags ?? undefined, "tags"),
+      isFavorite: row.is_favorite === true,
     });
   }
 
@@ -65,6 +67,7 @@ export const PHOTO_INNER_SELECT = `
   location,
   lat,
   lng,
+  is_favorite,
   photo_people(people(name)),
   photo_tags(tags(name))
 `;

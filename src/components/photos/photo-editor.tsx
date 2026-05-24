@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MapPin, Plus, Trash2, X } from "lucide-react";
+import { MapPin, Plus, Star, Trash2, X } from "lucide-react";
 import {
   formatEventDateLabel,
   fromDatetimeLocalValue,
@@ -16,6 +16,7 @@ import { photoFormSchema, type PhotoFormValues } from "@/lib/photos/schema";
 import {
   searchPeople,
   searchTags,
+  setPhotoFavorite,
   softDeletePhoto,
   updatePhoto,
 } from "@/lib/photos/update-actions";
@@ -39,6 +40,8 @@ export function PhotoEditor({ photo }: PhotoEditorProps) {
     { id: string; name: string }[]
   >([]);
   const [deleting, setDeleting] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(photo.isFavorite);
+  const [favoritePending, setFavoritePending] = useState(false);
   const snapshotRef = useRef(JSON.stringify(photo.formDefaults));
 
   const form = useForm<PhotoFormValues>({
@@ -150,6 +153,20 @@ export function PhotoEditor({ photo }: PhotoEditorProps) {
     );
   };
 
+  const handleToggleFavorite = async () => {
+    if (favoritePending) return;
+    const next = !isFavorite;
+    setIsFavorite(next);
+    setFavoritePending(true);
+    const result = await setPhotoFavorite(photo.id, next);
+    setFavoritePending(false);
+    if (!result.ok) {
+      setIsFavorite(!next);
+      return;
+    }
+    router.refresh();
+  };
+
   const handleDelete = async () => {
     if (
       !window.confirm(
@@ -182,7 +199,7 @@ export function PhotoEditor({ photo }: PhotoEditorProps) {
               ) : (
                 <p className="ps-date ps-date-muted">Sem data</p>
               )}
-              <div className="field" style={{ marginTop: "var(--space-3)" }}>
+              <div className="field ps-date-field">
                 <label className="field-label" htmlFor="eventDate">
                   Data do evento
                 </label>
@@ -193,12 +210,29 @@ export function PhotoEditor({ photo }: PhotoEditorProps) {
                 />
               </div>
             </div>
-            <p className={`save-status status-${saveStatus}`} aria-live="polite">
+            <div className="ps-panel-top-end">
+              <button
+                type="button"
+                className={`icon-btn fav-toggle${isFavorite ? " is-on" : ""}`}
+                onClick={() => void handleToggleFavorite()}
+                disabled={favoritePending}
+                aria-pressed={isFavorite}
+                aria-label={isFavorite ? "Remover dos favoritos" : "Marcar como favorito"}
+                title={isFavorite ? "Remover dos favoritos" : "Marcar como favorito"}
+              >
+                <Star
+                  size={20}
+                  strokeWidth={1.75}
+                  fill={isFavorite ? "currentColor" : "none"}
+                />
+              </button>
+              <p className={`save-status status-${saveStatus}`} aria-live="polite">
               {saveStatus === "saving" && "Salvando…"}
               {saveStatus === "saved" && "Salvo"}
               {saveStatus === "error" && (saveError ?? "Erro ao salvar")}
               {saveStatus === "idle" && "\u00a0"}
-            </p>
+              </p>
+            </div>
           </div>
 
           <div className="field">
@@ -366,8 +400,7 @@ export function PhotoEditor({ photo }: PhotoEditorProps) {
           <div className="ps-block ps-actions">
             <button
               type="button"
-              className="btn btn-danger btn-sm"
-              style={{ width: "100%", justifyContent: "center" }}
+              className="btn btn-danger btn-sm btn-block"
               onClick={() => void handleDelete()}
               disabled={deleting}
             >

@@ -9,6 +9,7 @@ import { PhotoTimeline } from "@/components/photos/photo-timeline";
 import type { PhotoDisplayItem } from "@/lib/photos/types";
 import type { PhotoView } from "@/lib/photos/views";
 import { PHOTO_PAGE_SIZE } from "@/lib/photos/views";
+import { PhotoCalendar } from "./photo-calendar";
 import { PhotoList } from "./photo-list";
 
 const PhotoMap = dynamic(
@@ -24,6 +25,7 @@ type PhotoGalleryViewProps = {
   loadMoreHref: string;
   emptyTitle: string;
   emptyDescription: string;
+  emptyIcon?: React.ReactNode;
   emptyAction?: React.ReactNode;
 };
 
@@ -35,6 +37,7 @@ export function PhotoGalleryView({
   loadMoreHref,
   emptyTitle,
   emptyDescription,
+  emptyIcon,
   emptyAction,
 }: PhotoGalleryViewProps) {
   if (photos.length === 0) {
@@ -42,7 +45,7 @@ export function PhotoGalleryView({
       <EmptyPlaceholder
         title={emptyTitle}
         description={emptyDescription}
-        icon={<ImageIcon size={36} strokeWidth={1.5} />}
+        icon={emptyIcon ?? <ImageIcon size={36} strokeWidth={1.5} />}
         action={emptyAction}
       />
     );
@@ -56,6 +59,8 @@ export function PhotoGalleryView({
     <>
       {view === "timeline" ? (
         <PhotoTimeline photos={photos} />
+      ) : view === "calendar" ? (
+        <PhotoCalendar photos={photos} />
       ) : view === "map" ? (
         <PhotoMap photos={photos} hiddenCount={hiddenGeo} />
       ) : view === "list" ? (
@@ -64,7 +69,7 @@ export function PhotoGalleryView({
         <PhotoGrid photos={photos} />
       )}
 
-      {hasMore && view !== "map" ? (
+      {hasMore && view !== "map" && view !== "calendar" ? (
         <div className="gallery-load-more">
           <Link href={loadMoreHref} className="btn btn-outline">
             Carregar mais fotos

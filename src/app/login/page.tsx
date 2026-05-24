@@ -14,10 +14,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     return (
       <div className="login-page">
         <div className="login-card">
-          <p
-            className="login-sub"
-            style={{ color: "var(--destructive, #b91c1c)" }}
-          >
+          <p className="field-hint field-error">
             Configuração incompleta na Vercel: defina{" "}
             <strong>NEXT_PUBLIC_SUPABASE_URL</strong> e{" "}
             <strong>NEXT_PUBLIC_SUPABASE_ANON_KEY</strong> (chave anon/publishable
@@ -50,7 +47,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           <span className="login-mark">M</span>
           <div>
             <h1 className="login-title">Memórias</h1>
-            <p className="login-sub">Entre com sua conta da família</p>
+            <p className="login-sub">Portal privado da família</p>
           </div>
         </div>
         <LoginForm serverError={serverError} />

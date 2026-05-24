@@ -82,7 +82,7 @@ export function LoginForm({ serverError }: LoginFormProps) {
           type="password"
           name="password"
           autoComplete="current-password"
-          placeholder="Sua senha"
+          placeholder="••••••••"
           required
           minLength={6}
           disabled={pending}
